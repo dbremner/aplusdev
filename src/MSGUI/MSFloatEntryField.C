@@ -13,9 +13,6 @@
 #if defined(MSTK_MANUAL_INSTANTIATION)
 #include <MSGUI/MSTypeEntryField.C>
 
-#if defined(MS_XLC_TEMPLATE_INSTANTIATION)
-#pragma define (MSTypeEntryField<MSFloat>)
-#endif
 
 #if defined(MS_EDG_TEMPLATE_INSTANTIATION)
 #pragma instantiate MSTypeEntryField<MSFloat>

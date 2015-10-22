@@ -27,14 +27,6 @@
 #pragma instantiate MSPointerArray<MSTableColumn>
 #endif
 
-#if defined(MS_XLC_TEMPLATE_INSTANTIATION)
-#pragma define (MSPointerArray<MSTrace>)
-#pragma define (MSPointerArray<MSTraceSet>)
-#pragma define (MSPointerArray<MSParagraph>)
-#pragma define (MSPointerArray<MSPrintItem>)
-#pragma define (MSPointerArray<MSPrintManager>)
-#pragma define (MSPointerArray<MSTableColumn>)
-#endif
 
 #if defined(MS_STD_TEMPLATE_INSTANTIATION)
 template class MSPointerArray<MSTrace>;

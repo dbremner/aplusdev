@@ -15,9 +15,6 @@
 
 #include <MSTypes/MSTypeData.C>
 
-#if defined(MS_XLC_TEMPLATE_INSTANTIATION)
-#pragma define (MSTypeData<unsigned long,MSAllocator<unsigned long> >)
-#endif
 
 #if defined(MS_EDG_TEMPLATE_INSTANTIATION)
 #pragma instantiate MSTypeData<unsigned long,MSAllocator<unsigned long> >

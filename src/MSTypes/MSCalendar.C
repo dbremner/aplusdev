@@ -23,11 +23,6 @@
 #if defined(MSTK_MANUAL_INSTANTIATION)
 #include <MSTypes/MSIHashKeySet.C>
 
-#if defined(MS_XLC_TEMPLATE_INSTANTIATION)
-#pragma define(MSIHashKeySet<MSHoliday,MSDate>)
-#pragma define(MSIHashKeySet<MSResourceHolidaySet,MSResourceCode>)
-#pragma define(MSIHashKeySet<MSResourceCodeDesc,MSResourceCode>)
-#endif
 
 #if defined(MS_EDG_TEMPLATE_INSTANTIATION)
 #pragma instantiate MSIHashKeySet<MSHoliday,MSDate>

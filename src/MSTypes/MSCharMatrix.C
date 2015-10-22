@@ -24,9 +24,6 @@
 #include <MSTypes/MSTypeMatrix.C>
 #include <MSTypes/MSCharVector.H>
 
-#if defined(MS_XLC_TEMPLATE_INSTANTIATION)
-#pragma define (MSTypeMatrix<char>)
-#endif
 
 #if defined(MS_VC_TEMPLATE_INSTANTIATION)
 template MSTypeMatrix<char>;

@@ -42,10 +42,6 @@ template MSIHashKeySet<MSPixmap,MSString>;
 template MSGenericVector<MSPixmap>;
 #endif
 
-#if defined(MS_XLC_TEMPLATE_INSTANTIATION)
-#pragma define(MSGenericVector<MSPixmap>)
-#pragma define(MSIHashKeySet<MSPixmap,MSString>)
-#endif
 
 
 #endif //MSTK_MANUAL_INSTANTIATION

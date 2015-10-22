@@ -17,9 +17,6 @@
 #if defined(MSTK_MANUAL_INSTANTIATION)
 #include <MSTypes/MSTypeData.C>
 
-#if defined(MS_XLC_TEMPLATE_INSTANTIATION)
-#pragma define (MSTypeData<double,MSAllocator<double> >)
-#endif
 
 #if defined(MS_EDG_TEMPLATE_INSTANTIATION)
 #pragma instantiate MSTypeData<double,MSAllocator<double> >

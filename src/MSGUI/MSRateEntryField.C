@@ -15,9 +15,6 @@
 #pragma instantiate MSTypeEntryField<MSRate>
 #endif
 
-#if defined(MS_XLC_TEMPLATE_INSTANTIATION)
-#pragma define (MSTypeEntryField<MSRate>)
-#endif
 
 #if defined(MS_STD_TEMPLATE_INSTANTIATION)
 template class MSTypeEntryField<MSRate>;

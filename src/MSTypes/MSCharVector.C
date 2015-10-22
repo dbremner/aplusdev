@@ -154,9 +154,6 @@ void whitespace (const char &, istrstream & ist)
 #include <MSTypes/MSBuiltinTypeVector.C>
 #include <MSTypes/MSBuiltinSPick.C>
 
-#if defined(MS_XLC_TEMPLATE_INSTANTIATION)
-#pragma define (MSTypeVector<char>)
-#endif
 
 #if defined(MS_EDG_TEMPLATE_INSTANTIATION)
 

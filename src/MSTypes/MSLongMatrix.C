@@ -20,9 +20,6 @@
 
 #include <MSTypes/MSLongVector.H>
 
-#if defined(MS_XLC_TEMPLATE_INSTANTIATION)
-#pragma define (MSTypeMatrix<long>)
-#endif
 
 #if defined(MS_VC_TEMPLATE_INSTANTIATION)
 template MSTypeMatrix<long>;

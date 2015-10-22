@@ -12,9 +12,6 @@
 
 #include <MSTypes/MSTypeVector.C>
 
-#if defined(MS_XLC_TEMPLATE_INSTANTIATION)
-#pragma define (MSTypeVector<MSTime>)
-#endif
 
 #if defined(MS_EDG_TEMPLATE_INSTANTIATION)
 #pragma instantiate MSBaseVector<MSTime,MSVectorModelAllocator<MSTime> >

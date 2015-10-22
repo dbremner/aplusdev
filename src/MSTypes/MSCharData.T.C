@@ -17,9 +17,6 @@
 #ifdef MSTK_MANUAL_INSTANTIATION
 #include <MSTypes/MSTypeData.C>
 
-#ifdef MS_XLC_TEMPLATE_INSTANTIATION
-#pragma define (MSTypeData<char,MSAllocator<char> >)
-#endif
 
 #ifdef MS_EDG_TEMPLATE_INSTANTIATION
 #pragma instantiate MSTypeData<char,MSAllocator<char> >

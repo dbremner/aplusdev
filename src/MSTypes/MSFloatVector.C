@@ -27,9 +27,6 @@
 #if defined(MSTK_MANUAL_INSTANTIATION)
 #include <MSTypes/MSBuiltinTypeVector.C>
 
-#if defined(MS_XLC_TEMPLATE_INSTANTIATION)
-#pragma define (MSTypeVector<double>)
-#endif
 
 #if defined(MS_EDG_TEMPLATE_INSTANTIATION)
 #pragma instantiate MSBaseVector<double, MSAllocator<double> >

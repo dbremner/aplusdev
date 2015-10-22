@@ -16,9 +16,6 @@
 #pragma instantiate MSTypeEntryField<MSUnsigned>
 #endif
 
-#if defined(MS_XLC_TEMPLATE_INSTANTIATION)
-#pragma define (MSTypeEntryField<MSUnsigned>)
-#endif
 
 #if defined(MS_STD_TEMPLATE_INSTANTIATION)
 template class MSTypeEntryField<MSUnsigned>;

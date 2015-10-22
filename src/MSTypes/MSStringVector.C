@@ -26,9 +26,6 @@
 #include <MSTypes/MSObjectTypeVector.C>
 #include <MSTypes/MSTypeData.C>
 
-#if defined(MS_XLC_TEMPLATE_INSTANTIATION)
-#pragma define (MSTypeVector<MSString>)
-#endif
 
 #if defined(MS_EDG_TEMPLATE_INSTANTIATION)
 

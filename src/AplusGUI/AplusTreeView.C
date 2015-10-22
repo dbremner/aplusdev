@@ -35,13 +35,6 @@ template class MSObservableTreeEvent<AplusTreeItem>;
 template class MSTreeView<AplusTreeItem>;
 #endif // MS_STD_TEMPLATE_INSTANTIATION
 
-#if defined(MS_XLC_TEMPLATE_INSTANTIATION)
-#pragma define(MSTabularTree<AplusTreeItem>)
-#pragma define(MSTabularTreeCursor<AplusTreeItem>)
-#pragma define(MSObservableTree<AplusTreeItem>)
-#pragma define(MSObservableTreeEvent<AplusTreeItem>)
-#pragma define(MSTreeView<AplusTreeItem>)
-#endif // MS_XLC_TEMPLATE_INSTANTIATION
 
 extern int safeAset(V,A,A,A);
 

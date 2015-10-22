@@ -26,9 +26,6 @@
 #include <MSTypes/MSBuiltinSPick.C>
 
 
-#if defined(MS_XLC_TEMPLATE_INSTANTIATION)
-#pragma define (MSTypeVector<unsigned long>)
-#endif
 
 #if defined(MS_EDG_TEMPLATE_INSTANTIATION)
 #pragma instantiate MSBaseVector<unsigned long, MSAllocator<unsigned long> >

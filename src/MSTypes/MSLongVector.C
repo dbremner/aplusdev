@@ -26,9 +26,6 @@
 #include <MSTypes/MSBuiltinSPick.C>
 
 
-#if defined(MS_XLC_TEMPLATE_INSTANTIATION)
-#pragma define (MSTypeVector<long>)
-#endif
 
 #if defined(MS_EDG_TEMPLATE_INSTANTIATION)
 

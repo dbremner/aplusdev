@@ -22,9 +22,6 @@
 template class MSIHashKeySet<MSWidgetResourceMapper::MapperItem,MSString>;
 #endif
 
-#if defined(MS_XLC_TEMPLATE_INSTANTIATION)
-#pragma define(MSIHashKeySet<MSWidgetResourceMapper::MapperItem,MSString>)
-#endif
 
 #if defined(MS_VC_TEMPLATE_INSTANTIATION)
 template MSIHashKeySet<MSWidgetResourceMapper::MapperItem,MSString>;

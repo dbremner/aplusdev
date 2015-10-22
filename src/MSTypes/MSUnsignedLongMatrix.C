@@ -23,9 +23,6 @@
 #include <MSTypes/MSTypeMatrix.C>
 #include <MSTypes/MSUnsignedLongVector.H>
 
-#if defined(MS_XLC_TEMPLATE_INSTANTIATION)
-#pragma define (MSTypeMatrix<unsigned long>)
-#endif
 
 #if defined(MS_VC_TEMPLATE_INSTANTIATION)
 template MSTypeMatrix<unsigned long>;

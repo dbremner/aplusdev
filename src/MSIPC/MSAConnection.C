@@ -25,9 +25,6 @@
 #pragma instantiate MSProtocolConnection<MSA>
 #endif
 
-#if defined(MS_XLC_TEMPLATE_INSTANTIATION)
-#pragma define(MSProtocolConnection<MSA>)
-#endif
 
 #if defined(MS_STD_TEMPLATE_INSTANTIATION)
 template class MSProtocolConnection<MSA>;

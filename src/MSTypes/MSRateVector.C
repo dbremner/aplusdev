@@ -16,9 +16,6 @@
 
 #include <MSTypes/MSTypeVector.C>
 
-#if defined(MS_XLC_TEMPLATE_INSTANTIATION)
-#pragma define (MSTypeVector<MSRate>)
-#endif
 
 #if defined(MS_EDG_TEMPLATE_INSTANTIATION)
 #pragma instantiate MSBaseVector<MSRate,MSVectorModelAllocator<MSRate> >

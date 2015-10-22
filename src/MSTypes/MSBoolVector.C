@@ -11,9 +11,6 @@
 #if defined(MSTK_MANUAL_INSTANTIATION) 
 #include <MSTypes/MSTypeVector.C>
 
-#if defined(MS_XLC_TEMPLATE_INSTANTIATION)
-#pragma define (MSTypeVector<MSBool>)
-#endif
 
 #if defined(MS_EDG_TEMPLATE_INSTANTIATION)
 #pragma instantiate MSBaseVector<MSBool,MSVectorModelAllocator<MSBool> >

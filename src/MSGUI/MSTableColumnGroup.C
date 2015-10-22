@@ -26,11 +26,6 @@
 #pragma instantiate MSGenericVector<MSManagedPointer<MSTableColumnGroup> >
 #endif
 
-#if defined(MS_XLC_TEMPLATE_INSTANTIATION)
-#pragma define(MSGenericVector<MSTableColumnGroup::Node>)
-#pragma define(MSGenericVector<const MSTableColumnGroup *>)
-#pragma define(MSGenericVector<MSManagedPointer<MSTableColumnGroup> >)
-#endif
 
 #if defined(MS_STD_TEMPLATE_INSTANTIATION)
 template class MSGenericVector<MSTableColumnGroup::Node>;

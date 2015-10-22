@@ -20,9 +20,6 @@
 #include <MSTypes/MSTypeData.C>
 #include <MSTypes/MSBaseTypeVector.C>
 
-#if defined(MS_XLC_TEMPLATE_INSTANTIATION)
-#pragma define (MSTypeVector<MSSymbol>)
-#endif
 
 #if defined(MS_EDG_TEMPLATE_INSTANTIATION)
 #pragma instantiate MSBaseVector<MSSymbol,MSAllocator<MSSymbol> >

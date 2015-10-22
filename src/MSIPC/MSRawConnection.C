@@ -19,9 +19,6 @@ static const int MaxReadSize=8192;
 #pragma instantiate MSProtocolConnection<MSString>
 #endif
 
-#if defined(MS_XLC_TEMPLATE_INSTANTIATION)
-#pragma define(MSProtocolConnection<MSString>)
-#endif
 
 #if defined (MS_STD_TEMPLATE_INSTANTIATION)
 template class MSProtocolConnection<MSString>;

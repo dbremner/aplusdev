@@ -24,9 +24,6 @@ class MSTypesExport MSTypeMatrix<int>;
 template MSTypeMatrix<int>;
 #endif
 
-#if defined(MS_XLC_TEMPLATE_INSTANTIATION)
-#pragma define (MSTypeMatrix<int>)
-#endif
 
 #if defined(MS_EDG_TEMPLATE_INSTANTIATION)
 #pragma instantiate MSTypeMatrix<int>

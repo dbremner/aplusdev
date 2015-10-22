@@ -17,9 +17,6 @@
 #pragma instantiate MSGenericVector<MSPixmap *>
 #endif
 
-#if defined(MS_XLC_TEMPLATE_INSTANTIATION)
-#pragma define(MSGenericVector<MSPixmap *>)
-#endif
 
 #if defined(MS_STD_TEMPLATE_INSTANTIATION)
 template class MSGenericVector<MSPixmap *>;
