@@ -15,13 +15,8 @@
 #include <dap/sgnl.h>
 
 /* internal macro declarations */
-#ifdef PRESUNOS4
-#define HANDLER_RETURN_TYPE		int
-#define HANDLER_RETURN			return 0
-#else
 #define HANDLER_RETURN_TYPE		void
 #define HANDLER_RETURN			return
-#endif
 
 /* internal function declarations */
 static HANDLER_RETURN_TYPE handler(int n);

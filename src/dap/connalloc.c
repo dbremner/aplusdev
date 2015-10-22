@@ -47,14 +47,7 @@
 #include <sys/types.h>
 #include <sys/uio.h>
 #include <dap/notsunos4.h>
-#ifdef PRESUNOS4
-#ifndef _SOCKET_
-#define _SOCKET_
 #include <sys/socket.h>
-#endif
-#else
-#include <sys/socket.h>
-#endif
 #include <dap/balloc.h>
 #include <dap/tod.h>
 #include <dap/chan.h>

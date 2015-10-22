@@ -14,14 +14,7 @@
 #include <sys/types.h>
 #include <sys/uio.h>
 #include <dap/notsunos4.h>
-#ifdef PRESUNOS4
-#	ifndef _SOCKET_
-#		define _SOCKET_
-#		include <sys/socket.h>
-#	endif
-#else
-#	include <sys/socket.h>
-#endif
+#include <sys/socket.h>
 #include <sys/time.h>
 #include <netinet/in.h>
 #include <dap/buff.h>
