@@ -44,7 +44,6 @@ struct avl
 };
 
 /* external function declarations */
-#if defined(__STDC__) || defined(__cplusplus) || defined(_AIX)
 # ifdef __cplusplus
 extern "C" {
 # endif
@@ -64,15 +63,6 @@ extern "C" {
 # ifdef __cplusplus
 }
 # endif
-#else
-  extern struct avl *avlalloc();
-  extern void *avlfind();
-  extern void avlfree();
-  extern void *avlinsert();
-  extern void *avlremove();
-  extern void *avlreplace();
-  extern void *avlwalk();
-#endif
 #endif
 
 

@@ -68,7 +68,6 @@ struct conn
 };
 
 /* external function declarations */
-#if defined(__STDC__) || defined(__cplusplus) || defined(_AIX)
 # ifdef __cplusplus
 extern "C" {
 # endif
@@ -83,13 +82,6 @@ extern "C" {
 # ifdef __cplusplus
 }
 # endif
-#else
-  extern void connackestb();
-  extern struct conn *connalloc();
-  extern void connclose();
-  extern void connfree();
-  extern void connopen();
-#endif
 
 #endif
 

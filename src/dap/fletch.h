@@ -20,7 +20,6 @@ struct fletch
 };
 
 /* external function declarations */
-#if defined(__STDC__) || defined(__cplusplus) || defined(_AIX)
 # ifdef __cplusplus
 extern "C" {
 # endif
@@ -33,14 +32,6 @@ extern "C" {
 # ifdef __cplusplus
 }
 # endif
-#else
-  extern struct fletch *fletchalloc();
-  extern void fletchfree();
-  extern void fletchsum();
-  extern int fletchcheck();
-  extern void fletchdone();
-  extern void fletchpatch();
-#endif
 
 #endif
 

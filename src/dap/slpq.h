@@ -40,7 +40,6 @@ struct slpqent
 extern struct node slpqents;
 
 /* external function declarations */
-#if defined(__STDC__) || defined(__cplusplus) || defined(_AIX)
 # ifdef __cplusplus
 extern "C" {
 # endif
@@ -56,16 +55,6 @@ extern "C" {
 # ifdef __cplusplus
 }
 # endif
-#else
-  extern struct slpq *slpqalloc();
-  extern void slpqfree();
-  extern void slpqgiveup();
-  extern void slpqimmed();
-  extern int slpqproc();
-  extern void slpqsched();
-  extern struct slpqent *slpqsleep();
-  extern void slpqwakeup();
-#endif
 #endif
 
 

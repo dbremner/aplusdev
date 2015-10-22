@@ -17,7 +17,6 @@
 #define bnew_r(t)	(t *)balloc_r(sizeof(t))
 
 /* external function declarations */
-#if defined(__STDC__) || defined(__cplusplus) || defined(_AIX)
 # ifdef __cplusplus
 extern "C" {
 # endif
@@ -37,19 +36,4 @@ extern "C" {
 # ifdef __cplusplus
 }
 # endif
-#else
-  extern char *bgprintf();
-  extern char *bnstring();
-  extern char *bnstring_r();
-  extern char *bstring();
-  extern char *bstring_r();
-  extern int bstrhash();
-  extern void *balloc();
-  extern void *balloc_r();
-  extern void *bdup();
-  extern void *bdup_r();
-  extern void *brealloc();
-  extern void *brealloc_r();
-  extern void bfree();
-#endif
 #endif

@@ -150,7 +150,6 @@ extern CX Rx,Cx;
 #if     defined(__EXTENSIONS__) || \
         (!defined(_POSIX_C_SOURCE) && !defined(_XOPEN_SOURCE)) || \
         (_POSIX_C_SOURCE - 0 >= 199506L) || defined(_POSIX_PTHREAD_SEMANTICS)
-#if     defined(__STDC__)
 #if     (_POSIX_C_SOURCE - 0 >= 199506L) || defined(_POSIX_PTHREAD_SEMANTICS)
 #ifdef __PRAGMA_REDEFINE_EXTNAME
 #define APLUS_GETPWNAM(name,pStruct,charBuf,n,pwd)  (pwd=getpwnam_r(name,pStruct,charBuf,n))
@@ -160,16 +159,6 @@ extern CX Rx,Cx;
 #else  /* (_POSIX_C_SOURCE - 0 >= 199506L) || ... */
 #define APLUS_GETPWNAM(name,pStruct,charBuf,n,pwd)  (pwd=getpwnam_r(name,pStruct,charBuf,n))
 #endif  /* (_POSIX_C_SOURCE - 0 >= 199506L) || ... */
-#else  /* __STDC__ */
-#if     (_POSIX_C_SOURCE - 0 >= 199506L) || defined(_POSIX_PTHREAD_SEMANTICS)
-#ifdef __PRAGMA_REDEFINE_EXTNAME
-#define APLUS_GETPWNAM(name,pStruct,charBuf,n,pwd)  (pwd=getpwnam_r(name,pStruct,charBuf,n))
-#else  /* __PRAGMA_REDEFINE_EXTNAME */
-#define APLUS_GETPWNAM(name,pStruct,charBuf,n,pwd)  (getpwnam_r(name,pStruct,charBuf,n,&pwd),pwd)
-#endif /* __PRAGMA_REDEFINE_EXTNAME */
-#else  /* (_POSIX_C_SOURCE - 0 >= 199506L) || ... */
-#endif /* (_POSIX_C_SOURCE - 0 >= 199506L) || ... */
-#endif /* __STDC__ */
 #endif /* defined(__EXTENSIONS__) || (__STDC__ == 0 ... */
 
 #if !defined(APLUS_GETPWNAM)

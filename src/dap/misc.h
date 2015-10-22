@@ -34,7 +34,6 @@ extern char hostname_l[];
 extern int parity[];
 
 /* external function declarations */
-#if  defined(__STDC__) || defined(__cplusplus) || defined(_AIX)
 # ifdef __cplusplus
 extern "C" {
 # endif
@@ -58,25 +57,6 @@ extern "C" {
 # ifdef __cplusplus
 }
 # endif
-#else
-  extern int BcdPack();
-  extern int BcdUnpack();
-  extern int PrAscDecode();
-  extern void PrAscEncode();
-  extern void daploop();
-  extern void dapselect();
-  extern void dapterm();
-  extern int dapversion();
-  extern void doclose();
-  extern int doread();
-  extern int doselect();
-  extern int dowrite();
-  extern char *hostname();
-  extern int mod255();
-  extern void noop();
-  extern struct sockaddr_in *servname_in();
-  extern int ulbetween();
-#endif
 
 #endif
 

@@ -23,7 +23,6 @@ struct hpp
 };
 
 /* external function declarations */
-#if defined(__STDC__) || defined(__cplusplus) || defined(_AIX)
 # ifdef __cplusplus
 extern "C" {
 # endif
@@ -34,12 +33,6 @@ extern "C" {
 # ifdef __cplusplus
 }
 # endif
-#else
-  extern struct hpp *hppalloc();
-  extern void hppfree();
-  extern struct hpp *hppmake_in();
-  extern struct sockaddr_in *hppname_in();
-#endif
 
 #endif
 

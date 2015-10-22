@@ -27,7 +27,6 @@ struct buff
 };
 
 /* external function declarations */
-#if defined(__STDC__) || defined(__cplusplus) || defined(_AIX)
 # ifdef __cplusplus
 extern "C" {
 # endif
@@ -57,31 +56,6 @@ extern "C" {
 # ifdef __cplusplus
 }
 # endif
-#else
-  extern struct 	buff *buffalloc();
-  extern struct 	buff *buffalloc_r();
-  extern void		buffclear();
-  extern struct buff *	bufffrag();
-  extern void		bufffree();
-  extern int		buffgetc();
-  extern void		buffgprintf();
-  extern void		buffputc();
-  extern int		buffputc_r();
-  extern void		buffputdouble();
-  extern void		buffputint();
-  extern void		buffputlong();
-  extern void		buffputs();
-  extern void		buffputshort();
-  extern int		buffread();
-  extern struct buff *	buffref();
-  extern void		buffroom();
-  extern int		buffroom_r();
-  extern void		buffstuff();
-  extern int		buffstuff_r();
-  extern void		bufftrim();
-  extern int		buffwrite();
-  extern void		buffzero();
-#endif
 
 #endif
 

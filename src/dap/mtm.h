@@ -29,7 +29,6 @@ struct mtm
 };
 
 /* external function declarations */
-#if defined(__STDC__) || defined(__cplusplus) || defined(_AIX)
 # ifdef __cplusplus
 extern "C" {
 # endif
@@ -46,17 +45,6 @@ extern "C" {
 # ifdef __cplusplus
 }
 # endif
-#else
-  extern struct mtm *mtmalloc();
-  extern void mtmdnins();
-  extern void mtmdnrm();
-  extern void mtmfree();
-  extern struct mtm *mtmlink();
-  extern void mtmunlink();
-  extern void mtmupins();
-  extern void mtmuprm();
-  extern void *mtmvalue();
-#endif
 
 #endif
 

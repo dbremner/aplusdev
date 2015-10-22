@@ -22,7 +22,6 @@ extern int args_index;
 extern char *args_value;
 
 /* external function declarations */
-#if defined(__STDC__) || defined(__cplusplus) || defined(_AIX)
 # ifdef __cplusplus
     extern "C" {
 # endif
@@ -32,11 +31,6 @@ extern char *args_value;
 # ifdef __cplusplus
     }
 # endif
-#else
-  extern int argsfirst();
-  extern int argsgetopt();
-  extern void argsnext();
-#endif
 
 #endif
 

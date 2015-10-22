@@ -12,15 +12,12 @@
 
 /* header file inclusions */
 #include <stdio.h>
-#if defined(__STDC__) || defined(__cplusplus) || defined(_AIX)
 #include <stdarg.h>
-#endif
 
 /* external data declarations */
 extern char _ErrBuf[];
 
 /* external function declarations */
-#if defined(__STDC__) || defined(__cplusplus) || defined(_AIX)
 # ifdef __cplusplus
     extern "C" {
 # endif
@@ -35,15 +32,6 @@ extern char _ErrBuf[];
 # ifdef __cplusplus
    }
 # endif
-#else
-  extern void Warn();
-  extern void Abort();
-  extern void Panic();
-  extern void Exit();
-  extern void SetWarn();
-  extern void SetWarnFP();
-  extern void SetWarnFunc();
-#endif
 
 
 #endif

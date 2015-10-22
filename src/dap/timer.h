@@ -32,7 +32,6 @@ struct timer
 extern struct node timers;
 
 /* external function declarations */
-#if defined(__STDC__) || defined(__cplusplus) || defined(_AIX)
 # ifdef __cplusplus
 extern "C" {
 # endif
@@ -44,12 +43,5 @@ extern "C" {
 # ifdef __cplusplus
 }
 # endif
-#else
-  extern struct timer *timer();
-  extern struct timer *timerabs();
-  extern void timerclr();
-  extern struct timeval *timernext();
-  extern int timerproc();
-#endif
 #endif
 

@@ -17,7 +17,6 @@
 #define MILLION_USECS	((long)(1000000))
 
 /* external function declarations */
-#if defined(__STDC__) || defined(__cplusplus) || defined(_AIX)
 # ifdef __cplusplus
 extern "C" {
 # endif
@@ -28,11 +27,5 @@ extern "C" {
 # ifdef __cplusplus
 }
 # endif
-#else
-  extern int tvdiff();
-  extern int tvnorm();
-  extern char *tvstring();
-  extern int tvsum();
-#endif
 #endif
 

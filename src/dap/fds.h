@@ -28,7 +28,6 @@ extern fd_set *fds_x;
 extern fd_set *fds_xa;
 
 /* external function declarations */
-#if defined(__STDC__) || defined(__cplusplus) || defined(_AIX) || defined(linux)
 # ifdef __cplusplus
 extern "C" {
 # endif
@@ -49,22 +48,6 @@ extern "C" {
 # ifdef __cplusplus
 }
 # endif
-#else
-  extern fd_set *fdsalloc();
-  extern fd_set *fdsalloc_r();
-  extern int fdsanyset();
-  extern void fdsclr();
-  extern void fdscopy();
-  extern fd_set *fdsdup();
-  extern fd_set *fdsdup_r();
-  extern void fdsfree();
-  extern void fdsfresh();
-  extern void fdsinit();
-  extern int fdsisset();
-  extern void fdsset();
-  extern void fdsterm();
-  extern void fdszero();
-#endif
 
 #endif
 

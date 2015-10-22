@@ -27,7 +27,6 @@ typedef struct {
 	remprog_t	*rp, *rpp;
 } ServEnt;
 
-#if defined(__STDC__) || defined(__cplusplus) || defined(_AIX)
 # ifdef __cplusplus
 extern "C" {
 # endif
@@ -39,13 +38,6 @@ extern "C" {
 # ifdef __cplusplus
 }
 # endif
-#else
-  extern int GetService();
-  extern int NextService();
-  extern int NextServ();
-  extern int get_service_by_name();
-  extern ServEnt *GetServ();
-#endif
 
 #endif
 

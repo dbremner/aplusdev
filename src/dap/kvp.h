@@ -26,7 +26,6 @@ struct kvp
 };
 
 /* external function declarations */
-#if defined(__STDC__) || defined(__cplusplus) || defined(_AIX)
 # ifdef __cplusplus
 extern "C" {
 # endif
@@ -41,16 +40,6 @@ extern "C" {
 # ifdef __cplusplus
 }
 # endif
-#else
-  extern struct kvp *kvpalloc();
-  extern struct node *kvpfind();
-  extern void kvpfree();
-  extern struct node *kvpinsert();
-  extern void *kvpkey();
-  extern void kvpremove();
-  extern void kvpreplace();
-  extern void *kvpvalue();
-#endif
 
 #endif
 

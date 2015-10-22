@@ -34,7 +34,6 @@ struct sgnl
 extern struct sgnl sgnls[];
 
 /* external function declarations */
-#if defined(__STDC__) || defined(__cplusplus) || defined(_AIX)
 # ifdef __cplusplus
 extern "C" {
 # endif
@@ -46,13 +45,6 @@ extern "C" {
 # ifdef __cplusplus
 }
 # endif
-#else
-  extern void sgnlcatch();
-  extern void sgnldefault();
-  extern void sgnlignore();
-  extern void sgnloriginal();
-  extern int sgnlproc();
-#endif
 
 #endif
 

@@ -30,7 +30,6 @@ struct hash
 };
 
 /* external function declarations */
-#if defined(__STDC__) || defined(__cplusplus) || defined(_AIX)
 # ifdef __cplusplus
 extern "C" {
 # endif
@@ -50,16 +49,6 @@ extern "C" {
 # ifdef __cplusplus
 }
 # endif
-#else
-  extern struct hash *hashalloc();
-  extern void *hashfind();
-  extern void hashfree();
-  extern void *hashinsert();
-  extern struct node *hashnode();
-  extern void *hashremove();
-  extern void *hashreplace();
-  extern void *hashwalk();
-#endif
 
 #endif
 

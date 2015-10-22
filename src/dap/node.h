@@ -22,7 +22,6 @@ struct node
 };
 
 /* external function declarations */
-#if defined(__STDC__) || defined(__cplusplus) || defined(_AIX)
 # ifdef __cplusplus
 extern "C" {
 # endif
@@ -36,15 +35,6 @@ extern "C" {
 # ifdef __cplusplus
 }
 # endif
-#else
-  extern struct node *nodealloc();
-  extern struct node *nodealloc_r();
-  extern void nodefree();
-  extern void nodeinsert();
-  extern void noderemove();
-  extern void nodesort();
-  extern void nodetoad();
-#endif
 
 #endif
 

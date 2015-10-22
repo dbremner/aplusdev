@@ -45,7 +45,6 @@ struct chan
 extern struct node chans;
 
 /* external function declarations */
-#if defined(__STDC__) || defined(__cplusplus) || defined(_AIX)
 # ifdef __cplusplus
 extern "C" {
 # endif
@@ -61,16 +60,6 @@ extern "C" {
 # ifdef __cplusplus
 }
 # endif
-#else
-  extern struct chan *chanopen();
-  extern void chanclose();
-  extern void chandsbl();
-  extern void chanenbl();
-  extern int chanisdsbl();
-  extern int chanisenbl();
-  extern int chanproc();
-  extern void chansetpri();
-#endif
 
 #endif
 

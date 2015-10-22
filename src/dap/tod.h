@@ -19,7 +19,6 @@
 extern struct timeval dap_tod_last;
 
 /* external function declarations */
-#if defined(__STDC__) || defined(__cplusplus) || defined(_AIX)
 # ifdef __cplusplus
 extern "C" {
 # endif
@@ -29,11 +28,6 @@ extern "C" {
 # ifdef __cplusplus
 }
 # endif
-#else
-  extern struct timeval *tod();
-  extern time_t todsec();
-  extern char *todstring();
-#endif
 
 #endif
 

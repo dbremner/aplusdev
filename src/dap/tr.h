@@ -19,7 +19,6 @@ extern unsigned char tr_etoa[];
 extern unsigned char tr_quadav[];
 
 /* external function declarations */
-#if defined(__STDC__) || defined(__cplusplus) || defined(_AIX)
 # ifdef __cplusplus
 extern "C" {
 # endif
@@ -27,8 +26,5 @@ extern "C" {
 # ifdef __cplusplus
 }
 # endif
-#else
-  extern int trchar();		            /* translate char using table */
-#endif
 #endif
 
