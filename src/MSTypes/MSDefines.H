@@ -19,10 +19,6 @@
  /*
   * MS_NO_EXCEPTIONS      -- Defined if compiler does not support exceptions
   *
-  * MS_NO_BOOL            -- Defined if compiler does not support the bool type
-  *
-  * MS_NO_WIDE_CHAR       -- Defined If compiler does not have a wchar_t type
-  *
   * MS_NO_INDEX_ERROR     -- turns off indexError reports from Vectors and Matrices
   *
   * MS_NO_INLINES         -- turns off usage of inlines
@@ -350,7 +346,6 @@
 
 # if defined(__SUNPRO_CC) && defined(HAVE_SVR4)                     /* TAG: sunCC,Solaris    */
 #  define MS_SUNPRO_CC                         1
-#  define MS_NO_BOOL                           1
 #  define MS_STD_TEMPLATE_INSTANTIATION        1 
 #  define MS_PREDECLARE_TEMPLATE_FRIENDS       1
 #  define MS_NO_PREDECLARE_SPECIALIZATION      1
@@ -408,7 +403,6 @@
  /*****************************************************************************/
 
 # if defined(_AIX)
-#  define MS_NO_BOOL                           1
 #  define MS_NO_PREDECLARE_SPECIALIZATION      1
 #  define MS_TEMPLATE_BEFORE_SPECIALIZATION    1
 #  define MS_NEED_FSYNC_DECLARATION            1
@@ -440,8 +434,6 @@
 
 # if defined(__sgi) && defined(__DELTA)                          /* TAG: DCC              */
 #  define MS_SGI_DCC                           1
-#  define MS_NO_BOOL                           1
-#  define MS_NO_WIDE_CHAR                      1
 #  define MS_NO_EXCEPTIONS                     1
 #  define MSTK_MANUAL_INSTANTIATION            1 
 #  define MS_EDG_TEMPLATE_INSTANTIATION        1 
@@ -467,8 +459,6 @@
 
 # if defined(__sgi) && defined(_ABIO32)                          /* TAG: sgi32            */
 #  define MS_SGI32                             1
-#  define MS_NO_BOOL                           1
-#  define MS_NO_WIDE_CHAR                      1
 #  define MSTK_MANUAL_INSTANTIATION            1 
 #  define MS_EDG_TEMPLATE_INSTANTIATION        1 
 #  define MS_REQUIRE_IEEEFP                    1
