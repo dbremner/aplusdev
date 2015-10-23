@@ -43,10 +43,6 @@ static VPF _WarnFunc = _DefaultWarnFunc;
 
 /* char _ErrBuf[2 * MAXERRSIZE]; not thread safe moved into functions*/
 
-#if defined(__sun__)
-extern int sys_nerr;
-#endif
-
 /* preprocess the format string */
 static char *
 fixit(int errnum, char *s, char r[])
@@ -69,14 +65,7 @@ fixit(int errnum, char *s, char r[])
 
 	/* error string a la syslog(3) */
       case 'm':
-	if (errnum < 1 || errnum > sys_nerr)
-	  str = "unknown error";
-	else
-#ifdef HAVE_STRERROR
-          str = strerror(errnum);
-#else
-	  str = sys_errlist[errnum];
-#endif
+      str = strerror(errnum);
 	for (z = str; *z != (char) NULL &&
 	     p < &r[MAXERRSIZE - 1]; *p++ = *z++);
 	cp += 2;
@@ -160,7 +149,6 @@ Abort(char *fmt,...)
   else
     _DefaultWarnFunc(_ErrBuf);
   abort();
-  _exit(1);
 }
 
 void

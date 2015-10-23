@@ -15,11 +15,7 @@
  *
  */
 
-#if defined(__NetBSD__) || defined(__FreeBSD) || defined (__APPLE__)
 #include <stdlib.h>
-#else
-#include <malloc.h>
-#endif
 
 #include <a/k.h>
 #include <a/fncdcls.h>

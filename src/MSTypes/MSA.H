@@ -13,11 +13,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#if defined(__FreeBSD__) || defined(__NetBSD__) || defined(__APPLE__)
 #include <stdlib.h>
-#else
-#include <malloc.h>
-#endif
 #include <MSTypes/MSDefines.H>
 #include <MSTypes/MSEnum.H>
 #include <MSTypes/MSInt.H>

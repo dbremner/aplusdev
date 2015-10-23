@@ -8,11 +8,7 @@
 /* contributed by Daniel F. Fisher */
 
 /* header file inclusions */
-#if defined(__NetBSD__) || defined(__FreeBSD) || defined (__APPLE__)
 #include <stdlib.h>
-#else
-#include <malloc.h>
-#endif
 
 #include <errno.h>
 #include <dap/Warn.h>

@@ -28,12 +28,7 @@ static void handler(fd)
 int fd;
 {
   char buf[256];
-#ifndef HAVE_STRERROR
-  extern char *sys_errlist[];
-  sprintf(buf, "handler: <%d>: %s\n", errno, sys_errlist[errno]);
-#else
   sprintf(buf, "handler: <%d>: %s\n", errno, strerror(errno));
-#endif
   (void)write(fd, buf, strlen(buf));
 }
 

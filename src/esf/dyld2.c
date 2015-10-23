@@ -10,11 +10,7 @@
 #if !defined(__APPLE__)
 #include <dlfcn.h>
 #endif
-#if defined(__NetBSD__) || defined(__FreeBSD) || defined (__APPLE__)
 #include <stdlib.h>
-#else
-#include <malloc.h>
-#endif
 
 #include <stdio.h>
 #include <string.h>

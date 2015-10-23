@@ -12,11 +12,7 @@
 #include <a/arthur.h>
 #include <stdio.h>
 #include <string.h>
-#if defined(__FreeBSD__) || defined(__NetBSD__) || defined(__APPLE__)
 # include <stdlib.h>
-#else
-# include <malloc.h>
-#endif
 #include <sys/types.h>
 #include <sys/times.h>
 #include <stdlib.h>

@@ -38,10 +38,6 @@ char *strdup();
 #include <a/arthur.h>
 #undef min
 
-#ifndef HAVE_STRERROR 
-  extern int sys_nerr;
-  extern char *sys_errlist[];
-#endif
 
 extern C Fs[];
 extern C *xfs_name[], *cmdsList[], *es[];
@@ -832,14 +828,9 @@ A ep_load(A aname)
   if (name==(C*)0) ERROUT(ERR_TYPE);
   rname=doloadafile(name,0);
   if(rname==(C*)0) {
-#ifdef HAVE_STRERROR
     char *errstr=strerror(errno);
     z=gv(Et,2); z->p[0]=(I)gsym("error");
     z->p[1]=(I)gsv(0,(errstr)?errstr:"unknown system error");
-#else
-    z=gv(Et,2); z->p[0]=(I)gsym("error");
-    z->p[1]=(I)gsv(0,(errno<sys_nerr)?sys_errlist[errno]:"unknown system error");
-#endif
   }
   else {z=gv(Et,2);z->p[0]=(I)gsym("ok");z->p[1]=(I)gsv(0,rname);free(rname);}
   R z;
@@ -861,14 +852,9 @@ A ep_loadrm(A aguard, A aname)
   }
   rname=doloadafile(name,1);
   if(rname==(C*)0) { 
-#ifdef HAVE_STRERROR
     char *errstr=strerror(errno);
     z=gv(Et,2); z->p[0]=(I)gsym("error");
     z->p[1]=(I)gsv(0,(errstr)?errstr:"unknown system error");
-#else
-    z=gv(Et,2); z->p[0]=(I)gsym("error");
-    z->p[1]=(I)gsv(0,(errno<sys_nerr)?sys_errlist[errno]:"unknown system error");
-#endif
   }
   else {z=gv(Et,2);z->p[0]=(I)gsym("ok");z->p[1]=(I)gsv(0,rname);free(rname);}
   R z;
@@ -938,14 +924,9 @@ A ep_cd(A a)
   name=getaname(a);
   if (name==(C *)0) ERROUT(ERR_TYPE);
   if(chdir(*name?name:getenv("HOME"))) {
-#ifdef HAVE_STRERROR
     char *errstr=strerror(errno);
     z=gv(Et,2); z->p[0]=(I)gsym("error");
     z->p[1]=(I)gsv(0,(errstr)?errstr:"unknown system error");
-#else
-    z=gv(Et,2); z->p[0]=(I)gsym("error");
-    z->p[1]=(I)gsv(0,(errno<sys_nerr)?sys_errlist[errno]:"unknown system error");
-#endif
   }
   else {setPWD();z=gv(Et,1);z->p[0]=(I)gsym("ok");}
   R z;

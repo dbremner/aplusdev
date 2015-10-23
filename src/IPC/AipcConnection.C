@@ -136,14 +136,9 @@ static I setNoDelayOnFd(I handle_,int wrnlvl_,int fd_,int val_)
   if (getpeername(fd_,(struct sockaddr *)sockname, &socklen))
 #endif
   {
-#ifndef HAVE_STRERROR
-    Warn("%t Getpeername failed on %d: %s\n",
-	 handle_,(errno)?sys_errlist[errno]:"unknown error");
-#else
     char *errstr=strerror(errno);
     Warn("%t Getpeername failed on %d: %s\n",
 	 handle_,errstr ? errstr : "unknown error");
-#endif
     R -1;
   }
   sockname[socklen]='\0';
@@ -353,14 +348,9 @@ int AipcConnection::readFileLength(void)
   I slen=-1;
 
   if(-1==ioctl(fd(),FIONREAD,&slen)) {
-#ifndef HAVE_STRERROR
-    ipcWarn(wrnlvl(),"%t ioctl FIONREAD failed: %s\n", 
-	  (errno<sys_nerr)?sys_errlist[errno]:"unknown error");
-#else
     char *errstr=strerror(errno);
     ipcWarn(wrnlvl(),"%t ioctl FIONREAD failed: %s\n", 
 	  (errstr) ? errstr : "unknown error");
-#endif
     resetWithError("ioctl");
     R -1;
   }

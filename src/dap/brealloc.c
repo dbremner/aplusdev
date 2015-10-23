@@ -8,11 +8,7 @@
 /* contributed by Daniel F. Fisher */
 
 /* header file inclusions */
-#if defined(__NetBSD__) || defined(__FreeBSD) || defined (__APPLE__)
 #include <stdlib.h>
-#else
-#include <malloc.h>
-#endif
 
 #include <errno.h>
 #include <string.h>
@@ -59,11 +55,7 @@ gasp(char *p, int size)
   static char m3[ULTODEC_SZ];
   int z3;
   static char m4[] = "): ";
-#ifdef HAVE_STRERROR
   char *m5 = strerror(ENOMEM);
-#else
-  char *m5 = sys_errlist[ENOMEM];
-#endif
   int z5 = strlen(m5);
   static char m6[] = "\n\n";
 
