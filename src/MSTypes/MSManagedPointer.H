@@ -62,9 +62,7 @@ protected:
 
 public:
   MSManagedPointer(void) : _node(0) {}
-#if !defined (MS_NO_EXPLICIT_KEYWORD)
   explicit MSManagedPointer(Type *pType_) : _node(new Node(pType_)) {}
-#endif
   MSManagedPointer(Type *pType_,MSExplicitInit) : _node(new Node(pType_)) {}
   MSManagedPointer(const MSManagedPointer<Type>& aType_)
   {

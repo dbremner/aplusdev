@@ -202,8 +202,6 @@
   * MS_ENUM_COMPARE_BUG                    -- Compiler ambiguity in compare of enum types if 
   *                                           that enum type is used in compare with another type (xlC)
   *
-  * MS_NO_EXPLICIT_KEYWORD                 -- Compiler doesn't support explicit keyword
-  *
   * MS_MAPNOTIFY_ON_MAP_BUG                -- in modal map() shouldn't wait for MapNotify,
   *                                           this is true for Windows NT X11 emulation layer.
   *
@@ -309,7 +307,6 @@
 #  define MS_NO_CONSTCHAR_STRPTIME             1
 #  define MS_NEED_MUNMAP_DECLARATION           1
 #  define MS_USE_FCNTL_BLOCKING                1
-#  define MS_NO_EXPLICIT_KEYWORD               1
 #  define MS_NO_COMPLEX_TEMPLATE_DEFAULTS      1 
 #  define MS_PREDECLARE_TEMPLATE_FRIENDS       1
 #  define MS_KEYPAD_BUG                        1       
@@ -331,7 +328,6 @@
 #  define MS_NEED_SYS_NERR_DECLARATION         1
 #  define MS_SOLARIS_THREADS                   1
 #  define MS_NO_MUTEX_INIT                     1
-#  define MS_NO_EXPLICIT_KEYWORD               1
 #  define MS_NO_COMPLEX_TEMPLATE_DEFAULTS      1
 #  define MS_PREDECLARE_TEMPLATE_FRIENDS       1
 #  define MS_MULTI_THREAD                      1
@@ -378,7 +374,6 @@
 #   define MS_NO_SIMPLE_TEMPLATE_DEFAULTS       1
 #   define MS_NEED_STRPTIME_DECLARATION         1
 #   define MS_NESTED_CLASSES_ACCESS_BUG         1
-#   define MS_NO_EXPLICIT_KEYWORD               1
 
 #   define MS_FORCE_INTERNAL_TEMPLATE_INSTANTIATION 1
 #   define MS_TEMPLATE_BEFORE_SPECIALIZATION    1
@@ -418,7 +413,6 @@
 #  define MS_NEED_STRCASECMP_DECLARATION       1
 #  define MS_WAIT_RETURNS_STATUS               1
 #  define MS_ENUM_COMPARE_BUG                  1
-#  define MS_NO_EXPLICIT_KEYWORD               1
 #  define MS_NO_SIMPLE_TEMPLATE_DEFAULTS       1
 #  define MS_HAS_M_2PI                         1
 #  define MS_PREDECLARE_TEMPLATE_OP_FUNCTIONS  1
@@ -444,7 +438,6 @@
 #  define MS_HAS_MKTIME                        1
 #  define MS_HAS_TMS_STRUCT                    1
 #  define MS_HAS_SYSTEMINFO                    1
-#  define MS_NO_EXPLICIT_KEYWORD               1
 #  define MS_NO_COMPLEX_TEMPLATE_DEFAULTS      1
 #  define MS_PREDECLARE_TEMPLATE_FRIENDS       1
 #  define MS_KEYPAD_BUG                        1
@@ -469,7 +462,6 @@
 #  define MS_USE_FCNTL_BLOCKING                1
 #  define MS_POSIX_THREADS                     1
 #  define MS_POSIX_D10_THREADS                 1
-#  define MS_NO_EXPLICIT_KEYWORD               1
 #  define MS_NO_COMPLEX_TEMPLATE_DEFAULTS      1
 #  define MS_PREDECLARE_TEMPLATE_FRIENDS       1
 #  define MS_MULTI_THREAD                      1
@@ -498,7 +490,6 @@
 #  define MS_USE_FCNTL_BLOCKING                1
 #  define MS_POSIX_THREADS                     1
 #  define MS_POSIX_D10_THREADS                 1
-#  define MS_NO_EXPLICIT_KEYWORD               1
 #  define MS_NO_COMPLEX_TEMPLATE_DEFAULTS      1
 #  define MS_PREDECLARE_TEMPLATE_FRIENDS       1
 #  define MS_MULTI_THREAD                      1
@@ -556,7 +547,6 @@
 #define MS_USE_FCNTL_BLOCKING                1
 #define MS_POSIX_THREADS                     1
 #define MS_POSIX_D10_THREADS                 1
-#define MS_NO_EXPLICIT_KEYWORD               1
 #define MS_NO_COMPLEX_TEMPLATE_DEFAULTS      1
 #define MS_PREDECLARE_TEMPLATE_FRIENDS       1
 #define MS_MULTI_THREAD                      1
@@ -657,7 +647,6 @@
 #if  _MSC_VER < 1100 
 //  VC++ 4.x
 
-#define MS_NO_EXPLICIT_KEYWORD                 1
 #define MS_NO_COMPLEX_TEMPLATE_DEFAULTS        1
 
 #define MS_NEED_CONST_ELEMENT_FOR_OPS          1
@@ -714,7 +703,6 @@
 #define MS_NO_COMPLEX_TEMPLATE_DEFAULTS        1
 #define MS_CXX_MANUAL_INSTANTIATION            1 
 #define MS_NO_FILIO_HEADER                     1
-//#define MS_NO_EXPLICIT_KEYWORD                 1
 #define MS_64BIT                               1
 #define MS_LITTLE_ENDIAN                       1
 #define MS_HAS_M_2PI                           1
@@ -923,15 +911,6 @@
 #else
   #define INLINELINKAGE2 inline
 #endif // __GNUC__
-
-
-
-// explicit keyword
-#if defined (MS_NO_EXPLICIT_KEYWORD)
-#define MSExplicit 
-#else
-#define MSExplicit explicit
-#endif
 
 // Macro for forming or ommitting default template parameters.
 #ifndef MS_NO_SIMPLE_TEMPLATE_DEFAULTS

@@ -44,9 +44,7 @@ class MSPointer
 public:
   MSPointer(void) : _pObject(0) {}
   MSPointer(Type* pObject_,MSExplicitInit=MSInit) : _pObject(pObject_) {}
-#if !defined (MS_NO_EXPLICIT_KEYWORD)
   explicit MSPointer(Type* pObject_) : _pObject(pObject_) {}
-#endif
   Type& operator*()  const { return *_pObject; }
   Type* operator->() const { return _pObject; }
   operator Type*()   const { return _pObject; }

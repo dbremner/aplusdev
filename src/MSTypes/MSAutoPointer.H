@@ -42,9 +42,7 @@ class MSAutoPointer
 public:
   MSAutoPointer(Type *pObject_,MSExplicitInit) : _pObject(pObject_) {}
   MSAutoPointer(void) : _pObject(0) {}
-#if !defined (MS_NO_EXPLICIT_KEYWORD)
   explicit MSAutoPointer(Type *pObject_) : _pObject(pObject_) {}
-#endif
   MSAutoPointer(const MSAutoPointer<Type>&);
 
   ~MSAutoPointer(void) { delete _pObject; }
