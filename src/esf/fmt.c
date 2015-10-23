@@ -8,9 +8,7 @@
 
 #include <a/development.h>
 #include <stdio.h>
-#if !defined(__cfront)
 #include <stdarg.h>
-#endif
 #include <ctype.h>
 #include <math.h>
 #include <string.h>

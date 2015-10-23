@@ -14,9 +14,7 @@
 #include <a/s.h>
 #include <a/fir.h>
 #include <dap/balloc.h>
-#if !defined(__cfront)
 #include <stdarg.h>
-#endif
 #include <setjmp.h>
 
 /* strings not equal */

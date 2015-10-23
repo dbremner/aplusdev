@@ -10,9 +10,7 @@
 /* header file inclusions */
 #include <stdio.h>
 #include <string.h>
-#if !defined(__cfront)
 #include <stdarg.h>
-#endif
 #include <dap/Warn.h>
 #include <dap/buff.h>
 

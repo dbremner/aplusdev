@@ -12,9 +12,7 @@
 #else
 #include <string.h>
 #endif
-#if !defined(__cfront)
 #include <stdarg.h>
-#endif
 #include <errno.h>
 #include <sys/time.h>
 #include <time.h>

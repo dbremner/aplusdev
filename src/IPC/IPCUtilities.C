@@ -7,9 +7,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include <stdio.h>
-#if !defined(__cfront)
 #include <stdarg.h>
-#endif
 #include <string.h>
 #include <memory.h>
 #include <math.h>

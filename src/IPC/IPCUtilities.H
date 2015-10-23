@@ -10,9 +10,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include <stdio.h>
-#if !defined(__cfront)
 #include <stdarg.h>
-#endif
 
 extern void ipcWarn(int warnLevel_, const C *fmt_, ...);
 extern I longAt(C *c);
