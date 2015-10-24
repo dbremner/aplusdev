@@ -8,8 +8,8 @@
 #include <stdio.h>
 #include <sys/time.h>
 
-millisleep(i)
-int i;
+void
+millisleep(int i)
 {
 	struct timeval tv;
 

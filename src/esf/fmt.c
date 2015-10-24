@@ -131,7 +131,7 @@ void FWarn(int scb, C *fmt, ...)
 /*
  * Allocate and initialize a format structure
  */
-static struct format *formalloc()
+static struct format *formalloc(void)
 {
   return (struct format *)calloc(1, sizeof(struct format));
 }
@@ -139,8 +139,7 @@ static struct format *formalloc()
 /*
  * Free space allocated for the formats
  */
-static void freeforms(fmtlist)
-  struct format *fmtlist;
+static void freeforms(struct format *fmtlist)
 {
   struct format *p, *next;
   
@@ -168,8 +167,7 @@ static void freeforms(fmtlist)
 /*
  * Reverse a string in place 
  */
-static void reverse(s)
-  char *s;
+static void reverse(char *s)
 {
   int c, i, j;
   for ( i=0, j=strlen((DEV_STRARG)s)-1; i<j; i++, j--) {
@@ -182,10 +180,7 @@ static void reverse(s)
 /*
  * Make a list of all simple arrays' columns in the data (depth first)
  */
-static int datafind(indx, maxrow, d)
-  int *indx;
-  int *maxrow;
-  A d;
+static int datafind(int *indx, int *maxrow, A d)
 {
   int i, rc = 0;
   register int rows;
@@ -237,8 +232,7 @@ static int datafind(indx, maxrow, d)
 /*
  * Retrieve tokens from a format string
  */
-static int gettoken(f)
-  unsigned char *f;
+static int gettoken(unsigned char *f)
 {
   static unsigned char *p=NULL;         	/* Empty string */
   static unsigned char *start=NULL;	/* Use for text fields */
@@ -342,8 +336,7 @@ static int gettoken(f)
 /*
  * Parse modfier expressions
  */
-static int parsemodifiers(f)
-  struct format *f;
+static int parsemodifiers(struct format *f)
 {
   int c, rc = 0;
   
@@ -397,8 +390,7 @@ static int parsemodifiers(f)
 /*
  * Parse edit specifiers
  */
-static int parseedit(f)
-  struct format *f;
+static int parseedit(struct format *f)
 {
   int rc = 0, i;
   /* Set type, width, and precision fields as appropriate for edit type */
@@ -507,8 +499,7 @@ static int parseedit(f)
 /*
  * Parse the format string
  */
-static int parseform( fmtlist )
-  struct format **fmtlist;
+static int parseform( struct format **fmtlist )
 {
   int state = 0;
   int repeat=0;
@@ -715,10 +706,7 @@ static void trav1(f, dcols, pcols, ncol)
 /*
  * Determine number of printed columns in output
  */
-static int printcols(fmtlist, dcols, pcols)
-  struct format *fmtlist;
-  int dcols;
-  int *pcols;
+static int printcols(struct format *fmtlist, int dcols, int *pcols)
 {
   int ncol = 0, rc=0;
   int save_dcols;
@@ -871,8 +859,7 @@ static int aformat(cp, f, d, pcols)
 }
 
 #ifdef FUNCNOTUSED
-static int roundnearest(d)
-  double d;
+static int roundnearest(double d)
 {
   return (d < 0.0) ? (int)(d - .5) : (int)(d + .5);
 }
@@ -1171,11 +1158,7 @@ static int fformat(cp, f, d, pcols)
 #define NONSIG   2
 #define NUMSYMS  3
 
-static int gformat(cp, f, d, pcols)
-  char *cp;
-  struct format *f;
-  struct column *d;
-  int pcols;
+static int gformat(char *cp, struct format *f, struct column *d, int pcols)
 {
 
   int i, j, width;
@@ -1300,11 +1283,7 @@ static int gformat(cp, f, d, pcols)
   return rc;
 }
 
-static int trav2(f, d, rows, i, dcols, ncol, pcols, buf)
-  struct format *f;
-  struct column *d;
-  int rows, *i, dcols, *ncol, pcols;
-  char *buf;
+static int trav2(struct format *f, struct column *d, int rows, int *i, int dcols, int *ncol, int pcols, char *buf)
 {
   int j;
   static char *cp = NULL;
@@ -1365,10 +1344,7 @@ static int trav2(f, d, rows, i, dcols, ncol, pcols, buf)
   return rc;
 }
 
-static int dofmt(fmtlist, rows, dcols, pcols, buf)
-  struct format *fmtlist;
-  int rows, dcols, pcols;
-  char *buf;
+static int dofmt(struct format *fmtlist, int rows, int dcols, int pcols, char *buf)
 {
   int i = 0;
   int ncol = 0;
@@ -1388,9 +1364,7 @@ static int dofmt(fmtlist, rows, dcols, pcols, buf)
  * Format arrays - QUAD FMT imitation
  */
 ENTRYPOINT
-A ep_fmt(f, d)
-unsigned char *f;
-A d;
+A ep_fmt(unsigned char *f, A d)
 {
   A a;
   I dims[2];
@@ -1451,7 +1425,7 @@ A d;
   return a;
 }
 
-void fmtInstall()
+void fmtInstall(void)
 {
   install((PFI)ep_fmt,"_fmt", A_, 2, CP, A_,0,0,0,0,0,0);
   return;

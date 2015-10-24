@@ -67,14 +67,11 @@ ultodec(long unsigned int value, char *result, int length)
 #include <stdio.h>
 
 /* unit test function declarations */
-extern int main();
-extern void unittest();
+static void unittest(unsigned long value, int length, int printit);
 
 /* unit test function definitions */
 int 
-main(argc, argv)
-  int argc;
-  char *argv[];
+main(int argc, char *argv[])
 {
   int length;
   int count;
@@ -148,10 +145,7 @@ main(argc, argv)
 }
 
 static void 
-unittest(value, length, printit)
-  unsigned long value;
-  int length;
-  int printit;
+unittest(unsigned long value, int length, int printit)
 {
   int rc;
   static char result[ULTODEC_SZ];

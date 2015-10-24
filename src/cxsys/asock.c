@@ -30,8 +30,7 @@ static struct timeval timeout = { 0, 0 };
 /*
  * Handler for SIGPIPE
  */
-static void sigpipehandler(i)
-int i;
+static void sigpipehandler(int i)
 {
   return;	/* Do nothing */
 }
@@ -412,7 +411,7 @@ I areadwait(I fd, I sec, I usec)
 }
 
 
-void asockInstall()
+void asockInstall(void)
 {
   CX saveCx=Cx;
   Cx=cx("sys");

@@ -38,14 +38,12 @@ tvcmp(struct timeval * p1, struct timeval * p2)
 #include <dap/dap.h>
 
 /* unit test function declarations */
-extern int main();
-extern void unittest();
+static void 
+unittest(int printit, long sec1, long usec1, long sec2, long usec2);
 
 /* unit test function definitions */
 int 
-main(argc, argv)
-  int argc;
-  char *argv[];
+main(int argc, char *argv[])
 {
   int count;
   int printit;
@@ -116,12 +114,7 @@ main(argc, argv)
 }
 
 static void 
-unittest(printit, sec1, usec1, sec2, usec2)
-  int printit;
-  long sec1;
-  long usec1;
-  long sec2;
-  long usec2;
+unittest(int printit, long sec1, long usec1, long sec2, long usec2)
 {
   struct timeval tv1, tv2;
   int rc;

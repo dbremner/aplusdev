@@ -10,7 +10,7 @@
 #include <a/fncdcls.h>
 
 /* external function definitions */
-void sInstall()
+void sInstall(void)
 {
   char *atree;
   char *sfile;

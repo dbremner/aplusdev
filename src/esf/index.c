@@ -21,7 +21,7 @@ CI(I,jj0)CI(F,jj1)CI(C,jj2)
 Z void (*indf[])()={jj0,jj1,jj2};
 
 ENTRYPOINT
-A ep_from(aidx,asrc,ana)A aidx,asrc,ana;
+A ep_from(A aidx, A asrc, A ana)
 {
   A z,na=0;I i,ic=1,idx=0,is;C *cp,*zcp;I zn=1,d[MAXR];NDC2(asrc,ana);
   if(asrc->t!=ana->t||Et==ana->t&&asrc->n&&sym(ana)!=sym(asrc))
@@ -53,7 +53,7 @@ A ep_from(aidx,asrc,ana)A aidx,asrc,ana;
 }
 
 ENTRYPOINT
-A ep_nanfind(aobj)A aobj;
+A ep_nanfind(A aobj)
 {
   A z;I count=0;F *fp;
   if (!QA(aobj)||Ft!=aobj->t) R gv(It,0);
@@ -66,7 +66,7 @@ A ep_nanfind(aobj)A aobj;
 }
 
 ENTRYPOINT
-I ep_index_of(a,w)A a, w;
+I ep_index_of(A a, A w)
 {
   A ta,tw;
   I items,i;
@@ -138,7 +138,7 @@ I ep_index_of(a,w)A a, w;
   R (I) index_of(a,w);
 }
 
-void tInstall()
+void tInstall(void)
 {
   install((PFI)ep_from, "_index", A_, 3, IA, A_, A_,0,0,0,0,0);
   install((PFI)ep_nanfind, "_nanfind", A_, 1, A_,0,0,0,0,0,0,0);

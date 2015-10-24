@@ -24,7 +24,7 @@
 
 SUBROUTINE
 int
-VetteMachine (machine) A machine;
+VetteMachine (A machine)
 {
   int i, j, len;
   A aobj, element, subelement, tokens;
@@ -71,12 +71,12 @@ VetteMachine (machine) A machine;
  */
 SUBROUTINE
 A 
-gst( x, s) I x; C *s; { A r=(A) gsv(x,s); r->r=1; return(r); }
+gst(I x, C *s) { A r=(A) gsv(x,s); r->r=1; return(r); }
 
 
 SUBROUTINE
 A
-MakeEmptyResult( machine) A machine;
+MakeEmptyResult(A machine)
 {
   A result;
   
@@ -92,7 +92,7 @@ static char buffer[512];
 
 SUBROUTINE
 A
-MakeResult( sym, s, toktype, len) I sym; char *s; I *toktype, len;
+MakeResult(I sym, char *s, I *toktype, I len)
 {
   I nparts, curtype, i, idx=0, bufidx;
   A result, aobj, typeobj;
@@ -134,9 +134,7 @@ static int tokencount;
 
 SUBROUTINE
 A
-RunMachine( s, forms, tokenobj, statesobj) 
-     char *s; 
-     A forms, tokenobj, statesobj;
+RunMachine(char *s, A forms, A tokenobj, A statesobj)
 {
   A result=NULL, curtoken;
   I *tokens, *statemat, slen, tklen, formno, i, j, idx, nr, nc, state;
@@ -188,7 +186,7 @@ RunMachine( s, forms, tokenobj, statesobj)
 
 ENTRYPOINT
 A
-ep_cform(s, machine) char *s; A machine;
+ep_cform(char *s, A machine)
 {
   A result;
 
@@ -200,7 +198,7 @@ ep_cform(s, machine) char *s; A machine;
 }
 
   
-void cformInstall()
+void cformInstall(void)
 {
   CX saveCx=Cx;
   Cx=cx("c");

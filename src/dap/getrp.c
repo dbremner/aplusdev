@@ -22,6 +22,7 @@ static struct remprog *rps;
 
 static void compress(char *fromptr);
 
+int
 getrpbyname(char *name, struct remprog ** rpp, int *nrpp)
 {
   FILE *fp;
@@ -68,6 +69,7 @@ getrpbyname(char *name, struct remprog ** rpp, int *nrpp)
   return (ret);			/* return YP error */
 }
 
+int
 rp_parse_value(char *value, struct remprog ** rpp, int *nrpp)
 {
   char *cp = value;

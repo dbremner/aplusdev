@@ -21,10 +21,9 @@ extern void dymeSet();
 extern void dyld2Install();
 extern I dbg_tdyld;
 
-static int dyld2();
+static int dyld2(char *sharedobj, A bindings);
 
-void dyldSlowInstall(argv0)
-char *argv0;
+void dyldSlowInstall(char *argv0)
  {
   dymeSet(2);
   install(dyld2,"_dyld", IV, 2, CP, A_,0,0,0,0,0,0);
@@ -32,9 +31,9 @@ char *argv0;
   return;
  }
 
-static int dyld2(sharedobj, bindings)
-  char *sharedobj;	/* Name of shared object to load in */
-  A bindings;		/* Bindings from c/f77 to A names/types */
+static int dyld2(char *sharedobj, A bindings)
+  // char *sharedobj;	/* Name of shared object to load in */
+  // A bindings;		/* Bindings from c/f77 to A names/types */
 {
   A *ap;		/* Points to elements of bindings */
   I nentries;		/* Number of entries */
@@ -86,5 +85,5 @@ static int dyld2(sharedobj, bindings)
   return 0;
 }
 
-void MAIN_(){}	/* This is needed to satisfy libF77.so */
+void MAIN_(void){}	/* This is needed to satisfy libF77.so */
 

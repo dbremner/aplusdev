@@ -97,14 +97,11 @@ tvnorm(struct timeval * p)
 #include <dap/dap.h>
 
 /* unit test function declarations */
-extern int main();
-extern void unittest();
+static void unittest(int printit, long sec, long usec);
 
 /* unit test function definitions */
 int 
-main(argc, argv)
-  int argc;
-  char *argv[];
+main(int argc, char *argv[])
 {
   int count;
   int printit;
@@ -146,10 +143,7 @@ main(argc, argv)
 }
 
 static void 
-unittest(printit, sec, usec)
-  int printit;
-  long sec;
-  long usec;
+unittest(int printit, long sec, long usec)
 {
   struct timeval tv;
   int rc;

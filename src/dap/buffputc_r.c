@@ -11,6 +11,7 @@
 #include <dap/buff.h>
 
 /* external function definitions */
+int
 buffputc_r(struct buff * p, char c)
 {
   if (p != (struct buff *) (0)) {

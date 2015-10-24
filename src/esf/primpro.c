@@ -319,7 +319,7 @@ A ep_profile(A aObj)
   return (A)gi(0);
 }
 
-void profileInstall()
+void profileInstall(void)
 { install(ep_profile,"_profile",A_,1,A_,0,0,0,0,0,0,0);  return; }
 
 

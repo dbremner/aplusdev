@@ -46,7 +46,7 @@ gst(C *s,I len)
  *
  */
 
-I *kmp_table(p, tlen) UC *p;
+I *kmp_table(UC *p, I tlen)
 {
   I *next;
   int i,j,o=tlen-1;
@@ -68,10 +68,7 @@ I *bm_table(UC *p,I tlen)
 }
 
 SUBROUTINE
-UC *bm_strstr( source, slen, target, tlen, t_bm)
-  UC *source, *target; 
-  I *t_bm;
-  I slen, tlen;
+UC *bm_strstr(UC *source, I slen, UC *target, I tlen, I *t_bm)
 {
   UC *s=source;
   I i,j,t;
@@ -108,7 +105,7 @@ UC *bm_strmat(UC *source, I slen, UC *target, I tlen, I *t_bm, UC *startp,
   
 #ifdef FUNCNOTUSED
 ENTRYPOINT
-ep_bms(asource, atarget)A asource, atarget;
+ep_bms(A asource, A atarget)
 {
   I *t_bm;
   t_bm=bm_table((UC *)atarget->p, atarget->n);
@@ -169,10 +166,7 @@ strname(UC *source, I slen, UC *target, I tlen)
  */
 SUBROUTINE
 A
-strsearch( source, slen, target, tlen, pcount, flags, rowlen)
-     UC *source, *target;
-     char *flags;
-     I *pcount, slen, tlen, rowlen;
+strsearch(UC *source, I slen, UC *target, I tlen, I *pcount, char *flags, I rowlen)
 {
   UC *s=source;
   I qarray = 8,oslen=slen;
@@ -221,9 +215,7 @@ strsearch( source, slen, target, tlen, pcount, flags, rowlen)
 /* insert s2 at s[pos], pasting over len chars, and moving others to right */
 SUBROUTINE
 char *
-strpaste(s, s2, pos, len)
-    char *s, *s2;
-    int pos, len;
+strpaste(char *s, char *s2, int pos, int len)
 {
     int i, shift;
 
@@ -243,9 +235,7 @@ strpaste(s, s2, pos, len)
 
 SUBROUTINE
 UC *
-ucapaste(s, s2, s2len, pos)
-    UC *s, *s2;
-    I s2len, pos;
+ucapaste(UC *s, UC *s2, I s2len, I pos)
 {
   if (s2==(UC *)0) s2len=0;
   if(s2len)bcopy( s2, s+pos, s2len);
@@ -259,10 +249,7 @@ ucapaste(s, s2, s2len, pos)
  */
 SUBROUTINE
 A
-stralias( asource, targetarg, replarg, flags)
-     A asource;
-     A targetarg, replarg;
-     char *flags;
+stralias(A asource, A targetarg, A replarg, char *flags)
 {
   int i=0, ni, slen=asource->n;
   int clen, sidx=0, nhits=0;
@@ -370,9 +357,7 @@ stralias( asource, targetarg, replarg, flags)
 
 ENTRYPOINT
 A
-ep_ssr( asource, targets, repls)
-     A asource; 
-     A targets, repls;
+ep_ssr(A asource, A targets, A repls)
 {
   NDC2(targets,repls); UseAlnum=TRUE; BeyondZebra=DefaultBeyondZebra;
   return(stralias( asource, targets, repls, "")); 
@@ -380,9 +365,7 @@ ep_ssr( asource, targets, repls)
 
 ENTRYPOINT
 A
-ep_nsr( asource, targets, repls)
-     A asource;
-     A targets, repls;
+ep_nsr(A asource, A targets, A repls)
 {
   NDC2(targets,repls); UseAlnum=TRUE; BeyondZebra=DefaultBeyondZebra;
   return(stralias( asource, targets, repls, "n"));
@@ -413,8 +396,7 @@ ss_matrix(A source, A hits, I tlen)
  */
 SUBROUTINE
 A
-ssmain( source, target, options)
-     A source; A target;C *options;
+ssmain(A source, A target, C *options)
 {
   I count=0;
   A result;
@@ -428,7 +410,7 @@ ssmain( source, target, options)
 
 ENTRYPOINT
 A  
-ep_ss( source, target)A source; A target;
+ep_ss(A source, A target)
 {
   UseAlnum=TRUE; BeyondZebra=DefaultBeyondZebra;
   return(ssmain( source, target, ""));
@@ -436,7 +418,7 @@ ep_ss( source, target)A source; A target;
 
 ENTRYPOINT
 A
-ep_ns( source, target)A source, target;
+ep_ns(A source, A target)
 {
   UseAlnum=TRUE; BeyondZebra=DefaultBeyondZebra;
   return(ssmain( source, target, "n"));
@@ -447,9 +429,7 @@ ep_ns( source, target)A source, target;
  */
 SUBROUTINE
 A
-gsrmain(asource, targets, repls, namechars)
-     A asource;
-     A targets, repls, namechars;
+gsrmain(A asource, A targets, A repls, A namechars)
 {
   char *s;
   UseAlnum=TRUE; BeyondZebra=DefaultBeyondZebra;
@@ -479,15 +459,13 @@ gsrmain(asource, targets, repls, namechars)
 		     
 ENTRYPOINT
 A
-ep_gsr( asource, targets, repls, namechars)
-     A asource;
-     A targets, repls, namechars;
+ep_gsr(A asource, A targets, A repls, A namechars)
 {
   NDC2(targets,repls);NDC1(namechars);
   return(gsrmain(asource, targets, repls, namechars));  
 }
 
-void ssrInstall()
+void ssrInstall(void)
 {
   install((PFI)ep_ns, "_ns", A_, 2, CA, CA,0,0,0,0,0,0);
   install((PFI)ep_nsr, "_nsr", A_, 3, CA, A_, A_,0,0,0,0,0);

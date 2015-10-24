@@ -46,9 +46,7 @@
 /* insert s2 at s[pos], pasting over len chars, and moving others to right */
 SUBROUTINE
 char *
-strpaste(s, s2, pos, len)
-  char *s, *s2;
-  int pos, len;
+strpaste(char *s, char *s2, int pos, int len)
 {
   int i, shift;
   
@@ -68,8 +66,7 @@ strpaste(s, s2, pos, len)
 
 SUBROUTINE
 void
-strrubout( str, c)
-     char *str, c;
+strrubout(char *str, char c)
 {
   char *res = str;
   while( *str && c == *str) ++str;
@@ -87,8 +84,7 @@ strrubout( str, c)
 /* strssub does the same for strings */
 SUBROUTINE
 void
-strssub( str, target, repl)
-     char *str, *target, *repl;
+strssub(char *str, char *target, char *repl)
 {
   int tlen=strlen((DEV_STRARG)target);
   while (NULL != (str=strstr(str,target))) strpaste( str, repl, 0, tlen);
@@ -171,7 +167,8 @@ matrix_quadfi( cm, nrows, ncol, outbool, outdata, olen, commas)
 static C sfibuf[SFIBUFSIZE];  
 
 SUBROUTINE
-commavet(s,se)char *s,*se;
+I
+commavet(char *s,char *se)
 {
   I intvl=3,dec_pt=0,coms=0,need_dec=0;
   /* H("check: commavet [%s] s:%d se:%d\n",s,s,se); */
@@ -250,9 +247,7 @@ A scalar_quadfi(ostr, commas, dyna) char *ostr; I commas;
 
 ENTRYPOINT
 A
-ep_fi( cm, n)
-     A cm;
-     I n;
+ep_fi(A cm, I n)
 {
   I rlen=cm->d[1], nrows=cm->d[0];
   char *data=(char *)cm->p;
@@ -288,9 +283,7 @@ ep_fi( cm, n)
 
 ENTRYPOINT
 A
-ep_cfi( cm, n)
-     A cm;
-     I n;
+ep_cfi(A cm, I n)
 {
   I rlen=cm->d[1], nrows=cm->d[0];
   char *data=(char *)cm->p;
@@ -325,21 +318,21 @@ ep_cfi( cm, n)
 
 
 ENTRYPOINT
-A ep_sfi(aobj)A aobj;
+A ep_sfi(A aobj)
 {
   if(1<aobj->r)ERROUT(ERR_RANK);
   return scalar_quadfi((char *)aobj->p, FALSE, SFIBUFSIZE<=aobj->n);
 }
 
 ENTRYPOINT
-  A ep_scfi(aobj)A aobj;
+  A ep_scfi(A aobj)
 {
   if(1<aobj->r)ERROUT(ERR_RANK);
   return scalar_quadfi((char *)aobj->p, TRUE, SFIBUFSIZE<=aobj->n);
 }
 
 
-void fiInstall()
+void fiInstall(void)
 {
   install((PFI)ep_cfi, "_cfi", A_, 2, CA, IV,0,0,0,0,0,0);
   install((PFI)ep_fi, "_fi", A_, 2, CA, IV,0,0,0,0,0,0);

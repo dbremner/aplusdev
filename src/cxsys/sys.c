@@ -6,7 +6,7 @@
 /*                                                                           */
 /*****************************************************************************/
 
-void sysInstall()
+void sysInstall(void)
 {
   eponymousInstall();
   asockInstall();

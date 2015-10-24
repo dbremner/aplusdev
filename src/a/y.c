@@ -45,7 +45,7 @@ extern I xfpeFlag;
 
 Z A currLoadFile=(A)0;
 
-A get_loadfile()
+A get_loadfile(void)
 {
   R(currLoadFile)?(A)ic(currLoadFile):aplus_nl;
 }

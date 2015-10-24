@@ -6,7 +6,7 @@
 /*                                                                           */
 /*****************************************************************************/
 
-void esfInstall()
+void esfInstall(void)
 {
   ssrInstall();
   fiInstall();

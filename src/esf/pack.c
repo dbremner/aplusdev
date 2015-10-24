@@ -29,9 +29,9 @@ extern V vlu();
 extern S symsplit(),symjoin();
 extern I dbg_tpack,dbg_tdef;
 
-static I iced();
-static I icedAtom();
-static I thaw();
+static I iced(I obj, I type);
+static I icedAtom(I arg);
+static I thaw(I iid);
 
 
 #define PKARG_ERROR   0
@@ -169,7 +169,7 @@ static A DefaultAOpts = 0;
 
 SUBROUTINE
 void
-setOpts(opts)C *opts;
+setOpts(C *opts)
 {
   Opts.pieces=(NULL==strchr((DEV_STRARG)opts,'p'))?0:1;
   Opts.verbose=(NULL==strchr((DEV_STRARG)opts,'v'))?0:1;
@@ -189,7 +189,7 @@ setOpts(opts)C *opts;
 typedef struct str_zhtn{I idx,obj,type;struct str_zhtn *n;}*ZHTN;
 
 SUBROUTINE
-ZHTN hashget(ht,obj,type)HT ht;I obj,type;
+ZHTN hashget(HT ht, I obj, I type)
 {
   ZHTN *zhtn=(ZHTN*)HTHASH(ht,obj^type),n;
   for(n=*zhtn;n;n=n->n)if(obj==n->obj&&type==n->type)R n;
@@ -197,7 +197,7 @@ ZHTN hashget(ht,obj,type)HT ht;I obj,type;
 }
 
 SUBROUTINE
-I hashset(ht,obj,type,idx)HT ht;I obj,type,idx;
+I hashset(HT ht, I obj, I type, I idx)
 {
   ZHTN *zhtn=(ZHTN*)HTHASH(ht,obj^type),n,hd;
   for(n=*zhtn;n;n=n->n)if(obj==n->obj&&type==n->type){n->idx=idx;R 0;}
@@ -206,7 +206,7 @@ I hashset(ht,obj,type,idx)HT ht;I obj,type,idx;
 }
 
 SUBROUTINE
-I hashfree(ht)HT ht;
+I hashfree(HT ht)
 {
   ZHTN *zhtn,n,t;
   I i;
@@ -231,8 +231,7 @@ I hashfree(ht)HT ht;
 /* egoha(0 is a copy of ha() from att.c.  It is copied here for
  * isolation from future changes in att.c.
  */
-Z egoha(n)
-C *n;
+Z egoha(C *n)
 {
 	unsigned long h = 0, c;
 
@@ -247,7 +246,7 @@ C *n;
 #define EGOHASH(x) ((egoha(x))&(EHT_HTSIZE-1))
 
 SUBROUTINE
-void EgoHashInitDynamic(nHA)I nHA;
+void EgoHashInitDynamic(I nHA)
 {
   Eht.hashArray=ma(nHA);
   Eht.nHash=nHA;
@@ -259,7 +258,7 @@ void EgoHashInitDynamic(nHA)I nHA;
 }
 
 SUBROUTINE
-void EgoHashInitIce()
+void EgoHashInitIce(void)
 {
   I *ehtBlock;
   struct buff *pb;
@@ -279,7 +278,7 @@ void EgoHashInitIce()
 }
 
 SUBROUTINE
-void EgoHashCleanup()
+void EgoHashCleanup(void)
 {
   if(EHT_DYNAMIC==Eht.source||EHT_RUNTIME==Eht.source)
   {
@@ -297,7 +296,7 @@ void EgoHashCleanup()
 }
 
 SUBROUTINE
-void EgoHashAdd(cvname,iego)S cvname;I iego;
+void EgoHashAdd(S cvname, I iego)
 {
   I haidx;
   DH("\343 z:EgoHashAdd(cvname:%ld [%s],iego:%ld)\n",cvname,cvname->n,iego);
@@ -313,7 +312,7 @@ void EgoHashAdd(cvname,iego)S cvname;I iego;
 
 static S Sthaw();
 SUBROUTINE
-void EgoHashBuildIfNeeded(type)I type;
+void EgoHashBuildIfNeeded(I type)
 {
   I iego;
   DH("\343 z:EgoHashBuildIfNeeded(type:%ld)\n",type);
@@ -330,7 +329,7 @@ void EgoHashBuildIfNeeded(type)I type;
 }
 
 SUBROUTINE
-I EgoHashLookup(cvname)S cvname;
+I EgoHashLookup(S cvname)
 {
   I haidx, idx, iego;
   DH("\343 z:EgoHashLookup(cvname:%ld [%s])\n",cvname,cvname->n);
@@ -358,7 +357,7 @@ I EgoHashLookup(cvname)S cvname;
 
 
 SUBROUTINE
-I AddIdEntry(tid)IDE tid;
+I AddIdEntry(IDE tid)
 {
   buffstuff(Zpack.IdBuff,(char *)tid,sizeof(IdEntry));
   hashset(Zpack.IdHashTable,tid->p,tid->type,Zpack.nId);
@@ -366,7 +365,7 @@ I AddIdEntry(tid)IDE tid;
 }
 
 SUBROUTINE
-I AddEgoEntry(cvname,tego)S cvname;EGOE tego;
+I AddEgoEntry(S cvname, EGOE tego)
 {
   I iego;
   iego=EgoHashLookup(cvname);
@@ -383,7 +382,7 @@ I AddEgoEntry(cvname,tego)S cvname;EGOE tego;
 }
 
 SUBROUTINE
-void clearStats()
+void clearStats(void)
 {
   I i;
   for(i=0;i<1+PK_NTYPES;++i)
@@ -391,7 +390,7 @@ void clearStats()
 }
 
 SUBROUTINE
-I zargvette(alist)A alist;
+I zargvette(A alist)
 {
   A a0,a1;
   if (qz(alist))R PKARG_NULL;
@@ -405,7 +404,7 @@ I zargvette(alist)A alist;
 
 extern C *stringFromAobj();
 SUBROUTINE
-C *MakeFileName(afn)A afn;
+C *MakeFileName(A afn)
 {
   Z C fnamebuf[MAXPATHLEN];
   C *rootname=stringFromAobj(afn);
@@ -417,7 +416,7 @@ C *MakeFileName(afn)A afn;
 }
     
 SUBROUTINE
-C *getfilename(afn)A afn;
+C *getfilename(A afn)
 {
   C *res=0;
   A p1=0;
@@ -441,7 +440,7 @@ C *getfilename(afn)A afn;
 }
 
 SUBROUTINE
-A getapackstr(astr)A astr;
+A getapackstr(A astr)
 {
   A p1=0,ares=(A)0;
   I haveOpts=0;
@@ -479,7 +478,7 @@ void iceWrite(C *ptr,I sz,I n)
 }
 
 SUBROUTINE
-long iceTell()
+long iceTell(void)
 {
   if (Zpack.fp) R ftell(Zpack.fp);
   else R Zpack.ResBuff->put-Zpack.ResBuff->get;
@@ -495,7 +494,7 @@ void writeIce(C *ptr,I sz,I n)
 }
 
 SUBROUTINE
-long packInIceString(plen,str)long *plen;C *str;
+long packInIceString(long *plen, C *str)
 {
   int slen=strlen((DEV_STRARG)str);
   long tell=iceTell();
@@ -514,28 +513,28 @@ long packInIceArray(long *plen,C *ptr,I sz,I n)
 }
 
 SUBROUTINE
-void icerZero(tid,obj)IDE tid;I obj;
+void icerZero(IDE tid, I obj)
 {
   tid->type=PK_ZERO;tid->p=0;
   tid->ftell=tid->len=0L;
 }
 
 SUBROUTINE
-void icerNull(tid,obj)IDE tid;I obj;
+void icerNull(IDE tid, I obj)
 {
   tid->type=PK_NULL;tid->p=(I)aplus_nl;
   tid->ftell=tid->len=0L;
 }
 
 SUBROUTINE
-void icerS(tid,s)IDE tid;S s;
+void icerS(IDE tid,S s)
 {
   tid->type=PK_SYM; tid->p=(I)s;
   tid->ftell=packInIceString(&tid->len,s->n);
 }
 
 SUBROUTINE
-void icerCx(tid,cxt)IDE tid;CX cxt;
+void icerCx(IDE tid,CX cxt)
 {
   I symiid=iced((I)cxt->s,(I)PK_SYM);
   tid->type=PK_CX; tid->p=(I)cxt;
@@ -543,7 +542,7 @@ void icerCx(tid,cxt)IDE tid;CX cxt;
 }
 
 SUBROUTINE
-void icerVref(tid,v)IDE tid;V v;
+void icerVref(IDE tid, V v)
 {
   long len=2;
   I *iceCube=ma(len);
@@ -557,7 +556,7 @@ void icerVref(tid,v)IDE tid;V v;
 } 
 
 SUBROUTINE
-void icerAvar(tid,aobj)IDE tid;A aobj;
+void icerAvar(IDE tid, A aobj)
 {
   tid->ftell=iceTell();tid->len=0;
   iceWrite((C *)&aobj->t,sizeof(I),1);
@@ -584,7 +583,7 @@ void icerAvar(tid,aobj)IDE tid;A aobj;
 }
 
 SUBROUTINE
-void icerAet(tid,aobj)IDE tid;A aobj;
+void icerAet(IDE tid,A aobj)
 {
   long len=3+MAXR+aobj->n;
   I *iceCube=ma(len);
@@ -601,7 +600,7 @@ void icerAet(tid,aobj)IDE tid;A aobj;
 }
 
 SUBROUTINE
-void icerAfunc(tid,aobj)IDE tid;A aobj;
+void icerAfunc(IDE tid,A aobj)
 {
   long len=3+(MAXR+1)+(aobj->n)+2;
   I *iceCube=ma(len);
@@ -627,7 +626,7 @@ void icerAfunc(tid,aobj)IDE tid;A aobj;
 }
 
 SUBROUTINE
-void icerAbeam(tid,aobj)IDE tid;A aobj;
+void icerAbeam(IDE tid,A aobj)
 {
   C *fname;
   I beammode,len=0;
@@ -647,7 +646,7 @@ void icerAbeam(tid,aobj)IDE tid;A aobj;
 
 
 SUBROUTINE
-void icerStr(tid,str)IDE tid;C *str;
+void icerStr(IDE tid,C *str)
 {
   tid->type=PK_STR; tid->p=(I)str;
   tid->ftell=packInIceString(&tid->len,str);
@@ -655,7 +654,7 @@ void icerStr(tid,str)IDE tid;C *str;
 
 extern C**get_primlist();
 SUBROUTINE
-void icerPrim(tid,pidx)IDE tid;I pidx;
+void icerPrim(IDE tid,I pidx)
 {
   C **plist=get_primlist(1,0);
   tid->type=PK_PRIM; tid->p=pidx;
@@ -663,7 +662,7 @@ void icerPrim(tid,pidx)IDE tid;I pidx;
 }
 
 SUBROUTINE
-void icerKword(tid,nidx)IDE tid;I nidx;
+void icerKword(IDE tid,I nidx)
 {
   C **nlist=get_primlist(1,1);
   tid->type=PK_KWORD; tid->p=nidx;
@@ -672,14 +671,14 @@ void icerKword(tid,nidx)IDE tid;I nidx;
 
 extern C*xfs_name[];
 SUBROUTINE
-void icerXfunc(tid,xidx)IDE tid;I xidx;
+void icerXfunc(IDE tid,I xidx)
 {
   tid->type=PK_XFUNC; tid->p=xidx;
   tid->ftell=packInIceString(&tid->len,xfs_name[xidx]);
 }
 
 SUBROUTINE
-void icerExpr(tid,expr)IDE tid;E expr;
+void icerExpr(IDE tid, E expr)
 {
   long len=2+expr->n;
   I *iceCube=ma(len);
@@ -693,7 +692,7 @@ void icerExpr(tid,expr)IDE tid;E expr;
 }
 
 SUBROUTINE
-void icerLocal(tid,lidx)IDE tid;I lidx;
+void icerLocal(IDE tid, I lidx)
 {
   tid->type=PK_LOCAL; tid->p=lidx;
   tid->ftell=lidx; tid->len=0;
@@ -701,7 +700,7 @@ void icerLocal(tid,lidx)IDE tid;I lidx;
 
 /* icerAdf is for derived functions */
 SUBROUTINE
-void icerAdf(tid,aobj)IDE tid;A aobj;
+void icerAdf(IDE tid, A aobj)
 {
   long len=3+(MAXR+1);
   I *iceCube=ma(len);
@@ -718,7 +717,7 @@ void icerAdf(tid,aobj)IDE tid;A aobj;
 }
 
 SUBROUTINE
-void icerEpVdat(tid,v)IDE tid;V v;
+void icerEpVdat(IDE tid, V v)
 {
   long len=sizeof(struct _v)/sizeof(I);
   I *iceCube=ma(len);
@@ -744,7 +743,7 @@ static void(*Icerfunc[])()={
   };
 
 SUBROUTINE
-I icer(obj,type)I obj,type;
+I icer(I obj, I type)
 {
   IDE tid=&TempId;
   if(0==obj&&
@@ -757,7 +756,7 @@ I icer(obj,type)I obj,type;
 }
 
 SUBROUTINE
-I iced(obj,type)I obj,type;
+I iced(I obj, I type)
 {
   ZHTN zhtn;
   
@@ -776,7 +775,7 @@ I iced(obj,type)I obj,type;
 }
 
 SUBROUTINE
-I icedAtom(arg)I arg;
+I icedAtom(I arg)
 {
   I type=PK_ZERO,obj=0;
   A aobj;
@@ -825,40 +824,40 @@ I icedAtom(arg)I arg;
  *
  */
 
-SUBROUTINE S Sthaw(iid)I iid;{R XS(thaw(iid));}
+SUBROUTINE S Sthaw(I iid) {R XS(thaw(iid));}
 
-SUBROUTINE CX CXthaw(iid)I iid;{R (CX)(thaw(iid));}
+SUBROUTINE CX CXthaw(I iid) {R (CX)(thaw(iid));}
 
 #ifdef FUNCNOTUSED
-SUBROUTINE E Ethaw(iid)I iid;{R XE(thaw(iid));}
+SUBROUTINE E Ethaw(I iid) {R XE(thaw(iid));}
 #endif
 
-SUBROUTINE void thawZero(tid)IDE tid;{tid->p=0;}
+SUBROUTINE void thawZero(IDE tid) {tid->p=0;}
 
-SUBROUTINE void thawNull(tid)IDE tid;{tid->p=(I)aplus_nl;}
+SUBROUTINE void thawNull(IDE tid) {tid->p=(I)aplus_nl;}
 
 SUBROUTINE 
-void thawS(tid)IDE tid;{tid->p=MS(si(Zpack.ice+tid->ftell));}
+void thawS(IDE tid) {tid->p=MS(si(Zpack.ice+tid->ftell));}
 
 SUBROUTINE
-void thawCx(tid)IDE tid;{tid->p=(I)cxi(Sthaw(tid->ftell));}
+void thawCx(IDE tid) {tid->p=(I)cxi(Sthaw(tid->ftell));}
 
 SUBROUTINE
-void thawVref(tid)IDE tid;
+void thawVref(IDE tid)
 {
   I *ptr=(I*)(Zpack.ice+tid->ftell);
   tid->p=MV(vi(Sthaw(ptr[0]),CXthaw(ptr[1])));
 }
 
 SUBROUTINE
-void thawAvar(tid)IDE tid;
+void thawAvar(IDE tid)
 {
   I *ptr=(I*)(Zpack.ice+tid->ftell);
   tid->p=(I)gc(ptr[0],ptr[1],ptr[2],ptr+3,ptr+12);
 }
 
 SUBROUTINE
-void thawAEt(tid)IDE tid;
+void thawAEt(IDE tid)
 {
   I i,*ptr=(I*)(Zpack.ice+tid->ftell);
   A z=ga(ptr[0],ptr[1],ptr[2],ptr+3);
@@ -867,7 +866,7 @@ void thawAEt(tid)IDE tid;
 }
 
 SUBROUTINE
-void thawAfunc(tid)IDE tid;
+void thawAfunc(IDE tid)
 {
   I i,idx=0,*ptr=(I*)(Zpack.ice+tid->ftell);
   A z=gv(Et,3+ptr[1]);
@@ -884,14 +883,14 @@ void thawAfunc(tid)IDE tid;
 }
 
 SUBROUTINE
-void thawAbeam(tid)IDE tid;
+void thawAbeam(IDE tid)
 {
   I *ptr=(I*)(Zpack.ice+tid->ftell);
   tid->p=mapIn(ptr+2,ptr[0]);
 }
 
 SUBROUTINE 
-void thawStr(tid)IDE tid;
+void thawStr(IDE tid)
 {
   I *ptr=(I*)(Zpack.ice+tid->ftell);
   I *res=ma(tid->len);
@@ -900,11 +899,11 @@ void thawStr(tid)IDE tid;
 }
 
 SUBROUTINE
-void thawPrim(tid)IDE tid;{tid->p=aplus_pi(Zpack.ice+tid->ftell);}
+void thawPrim(IDE tid) {tid->p=aplus_pi(Zpack.ice+tid->ftell);}
 /* thawPrim used for types PK_PRIM and PK_KWORD */
 
 SUBROUTINE
-void thawExpr(tid)IDE tid;
+void thawExpr(IDE tid)
 {
   I *ptr=(I*)(Zpack.ice+tid->ftell);
   E expr=(E)ma(2+ptr[0]);
@@ -916,13 +915,13 @@ void thawExpr(tid)IDE tid;
 }
 
 SUBROUTINE
-void thawXfunc(tid)IDE tid;{tid->p=xslu(Zpack.ice+tid->ftell);}
+void thawXfunc(IDE tid) {tid->p=xslu(Zpack.ice+tid->ftell);}
 
 SUBROUTINE 
-void thawLocal(tid)IDE tid;{tid->p=ML(tid->ftell);}
+void thawLocal(IDE tid) {tid->p=ML(tid->ftell);}
 
 SUBROUTINE
-void thawAdf(tid)IDE tid;
+void thawAdf(IDE tid)
 {
   I i,idx=0,*ptr=(I*)(Zpack.ice+tid->ftell);
   A z=gv(Et,1);
@@ -935,7 +934,7 @@ void thawAdf(tid)IDE tid;
 
 /* thawNoop is used for to skip PKE_type objects when looping thru Id. */
 SUBROUTINE
-void thawNoop(tid)IDE tid;
+void thawNoop(IDE tid)
 {
 }
 
@@ -947,7 +946,7 @@ static void(*Thawfunc[])()= {
   };
 
 SUBROUTINE
-I thaw(iid)I iid;
+I thaw(I iid)
 {
   IDE tid=Zpack.Id+iid;
   DH("\343 thaw(iid:%ld)\n",iid);
@@ -959,7 +958,7 @@ I thaw(iid)I iid;
 
 
 SUBROUTINE
-void thawGlobalVdat(tid,cxt,v)IDE tid;CX cxt;V v;
+void thawGlobalVdat(IDE tid, CX cxt, V v)
 {
   I *ptr=(I*)(Zpack.ice+tid->ftell);
   A dat=(A)thaw(ptr[3]);
@@ -971,7 +970,7 @@ void thawGlobalVdat(tid,cxt,v)IDE tid;CX cxt;V v;
 }
 
 SUBROUTINE
-void thawGlobalVdep(tid,cxt,v)IDE tid;CX cxt;V v;
+void thawGlobalVdep(IDE tid, CX cxt, V v)
 {
   I *ptr=(I*)(Zpack.ice+tid->ftell);
   A dat=(A)thaw(ptr[3]);
@@ -983,7 +982,7 @@ void thawGlobalVdep(tid,cxt,v)IDE tid;CX cxt;V v;
 }
 
 SUBROUTINE
-void thawGlobalData(iid,cxt,v)I iid;CX cxt;V v;
+void thawGlobalData( I iid, CX cxt, V v)
 {
   I dat=thaw(iid);
   v->t=0;
@@ -992,7 +991,7 @@ void thawGlobalData(iid,cxt,v)I iid;CX cxt;V v;
 }
 
 SUBROUTINE
-I thawGlobal(iid,scx,vname)I iid;S scx;S vname;
+I thawGlobal(I iid, S scx, S vname)
 {
   IDE tid=Zpack.Id+iid;
   CX cxt=cxi(scx);
@@ -1014,7 +1013,7 @@ I thawGlobal(iid,scx,vname)I iid;S scx;S vname;
 }
 
 SUBROUTINE
-I thawSlot(iid)I iid;
+I thawSlot(I iid)
 {
   IDE tid=Zpack.Id+iid;
   I *ptr,result;
@@ -1043,7 +1042,7 @@ I thawSlot(iid)I iid;
  */
 
 SUBROUTINE
-void zstoreStats()
+void zstoreStats(void)
 {
   I i;
   H("\343   Type      Objs    Refs    Size\n");
@@ -1061,7 +1060,7 @@ void zstoreStats()
 }
 
 SUBROUTINE
-I zstoreGlobals(alist)A alist;
+I zstoreGlobals(A alist)
 {
   I i;
   S svar,scx,vname,cvname;
@@ -1097,7 +1096,7 @@ I zstoreGlobals(alist)A alist;
 }
 
 SUBROUTINE
-I zstoreSlot(asf)A asf;
+I zstoreSlot(A asf)
 {
   A alist=(A)(*asf->p),adata=(A)(asf->p[1]);
   I i;
@@ -1119,7 +1118,7 @@ I zstoreSlot(asf)A asf;
 }
 
 SUBROUTINE
-void zstoreInitAbNihilo()
+void zstoreInitAbNihilo(void)
 {
   /* initialize Id and Ego Buffers */
   Zpack.IdBuff=buffalloc();
@@ -1147,7 +1146,7 @@ void zstoreInitAbNihilo()
 }
 
 SUBROUTINE
-I zstoreInitFromIce(astr)A astr;
+I zstoreInitFromIce(A astr)
 {
   I ilen,iid;
   IDE tid;
@@ -1231,7 +1230,7 @@ I zstoreInitFromIce(astr)A astr;
 }
 
 SUBROUTINE
-A zstoreFinishUp()
+A zstoreFinishUp(void)
 {
   IDE tid=&TempId;
   I i;
@@ -1331,7 +1330,7 @@ A zstoreAdd(A astr,I zarg,A alist)
  */
 
 SUBROUTINE
-void zretrieveGlobalsAll()
+void zretrieveGlobalsAll(void)
 {
   I iego;S vname,scx;CX saveCx=Cx;
   for(iego=0;iego<Zpack.nEgo;++iego)
@@ -1345,7 +1344,7 @@ void zretrieveGlobalsAll()
 }
 
 SUBROUTINE
-void zretrieveGlobalsSymvec(asym)A asym;
+void zretrieveGlobalsSymvec(A asym)
 {
   I i,iego;S vname,cvname,scx;CX saveCx=Cx;
   A zn=gv(Et,asym->n),zd=gv(Et,asym->n);
@@ -1370,7 +1369,7 @@ void zretrieveGlobalsSymvec(asym)A asym;
 }
 
 SUBROUTINE
-void zretrieveGlobalsSymDest(alist)A alist;
+void zretrieveGlobalsSymDest(A alist)
 {
   I i,iego;S vname,cvname,scx,destscx,destname;CX saveCx=Cx;
   A asym=(A)alist->p[0],adest=(A)alist->p[1];
@@ -1397,7 +1396,7 @@ void zretrieveGlobalsSymDest(alist)A alist;
 
 SUBROUTINE
 void
-zretrieveGlobals(zarg,alist)I zarg;A alist;
+zretrieveGlobals(I zarg, A alist)
 {
   switch(zarg)
   {
@@ -1409,7 +1408,7 @@ zretrieveGlobals(zarg,alist)I zarg;A alist;
 }
 
 SUBROUTINE
-A zretrieveSlotAll()
+A zretrieveSlotAll(void)
 {
   I iego;S cvname;
   A zn=gv(Et,Zpack.nEgo),zd=gv(Et,Zpack.nEgo);
@@ -1429,7 +1428,7 @@ A zretrieveSlotAll()
 }
 
 SUBROUTINE
-A zretrieveSlotSymvec(alist)A alist;
+A zretrieveSlotSymvec(A alist)
 {
   I i,iego;S vname,cvname,scx;
   A zn=gv(Et,alist->n),zd=gv(Et,alist->n);
@@ -1459,7 +1458,7 @@ A zretrieveSlotSymvec(alist)A alist;
 }
 
 SUBROUTINE
-A zretrieveSlot(zarg,alist)I zarg;A alist;
+A zretrieveSlot(I zarg, A alist)
 {
   switch(zarg)
   {
@@ -1470,7 +1469,7 @@ A zretrieveSlot(zarg,alist)I zarg;A alist;
 }
 
 SUBROUTINE
-A zretrieveCatalog()
+A zretrieveCatalog(void)
 {
   A z;
   I iego;
@@ -1480,7 +1479,7 @@ A zretrieveCatalog()
 }
 
 SUBROUTINE
-void zretrieveSetup()
+void zretrieveSetup(void)
 {
   I ilen;
 
@@ -1509,7 +1508,7 @@ void zretrieveSetup()
 }
 
 SUBROUTINE
-A zretrievePieces()
+A zretrievePieces(void)
 {
   A aId,aEgo,aHead,aIce,aEgoHash;
   I dim[2];
@@ -1584,7 +1583,7 @@ int zretrieveInitFile(afn,cmdstr,pfname)A afn;C *cmdstr;C **pfname;
 }
 
 SUBROUTINE
-void zretrieveInitPackstr(astr)A astr;
+void zretrieveInitPackstr(A astr)
 {
   /* astr must be a valid packstring */
 
@@ -1599,7 +1598,7 @@ void zretrieveInitPackstr(astr)A astr;
 }
 
 SUBROUTINE
-void zretrieveUnmapFile(fd)int fd;
+void zretrieveUnmapFile(int fd)
 {
   if(-1==munmap(Zpack.ice, Zpack.flen))
   {
@@ -1609,7 +1608,7 @@ void zretrieveUnmapFile(fd)int fd;
 }
 
 SUBROUTINE
-void zretrieveCleanup()
+void zretrieveCleanup(void)
 {
   I iid;
   /* go through Id, and dc() everything */
@@ -1629,7 +1628,7 @@ void zretrieveCleanup()
  */
 
 ENTRYPOINT
-A ep_fnew(afn,alist)A afn;A alist;
+A ep_fnew(A afn, A alist)
 {
   C *fname=getfilename(afn);
   A z;
@@ -1659,7 +1658,7 @@ A ep_fnew(afn,alist)A afn;A alist;
 }
 
 ENTRYPOINT
-A ep_fadd(afn,alist)A afn;A alist;
+A ep_fadd(A afn, A alist)
 {
   C *fname=getfilename(afn);
   A z;
@@ -1689,7 +1688,7 @@ A ep_fadd(afn,alist)A afn;A alist;
 }
 
 ENTRYPOINT
-A ep_snew(alist)A alist;
+A ep_snew(A alist)
 {
   I zarg;
   /* vette argument */
@@ -1707,7 +1706,7 @@ A ep_snew(alist)A alist;
 }
 
 ENTRYPOINT
-A ep_sadd(astr,alist)A astr;A alist;
+A ep_sadd(A astr, A alist)
 {
   I zarg;
   A aps;
@@ -1739,7 +1738,7 @@ A ep_sadd(astr,alist)A astr;A alist;
  */
 
 ENTRYPOINT
-A ep_ffix(afn,alist)A afn;A alist;
+A ep_ffix(A afn, A alist)
 {
   int fd ;
   I zarg;
@@ -1765,7 +1764,7 @@ A ep_ffix(afn,alist)A afn;A alist;
 }
 
 ENTRYPOINT
-A ep_sfix(astr,alist)A astr;A alist;
+A ep_sfix(A astr, A alist)
 {
   I zarg;
   A z=aplus_nl,aps;
@@ -1789,7 +1788,7 @@ A ep_sfix(astr,alist)A astr;A alist;
 }
 
 ENTRYPOINT
-A ep_fslot(afn,alist)A afn;A alist;
+A ep_fslot(A afn, A alist)
 {
   int fd;
   A z=aplus_nl;
@@ -1814,7 +1813,7 @@ A ep_fslot(afn,alist)A afn;A alist;
 }
 
 ENTRYPOINT
-A ep_sslot(astr,alist)A astr;A alist;
+A ep_sslot(A astr, A alist)
 {
   A z=aplus_nl,aps;
   I zarg;
@@ -1845,7 +1844,7 @@ A ep_sslot(astr,alist)A astr;A alist;
  */
 
 ENTRYPOINT
-A ep_fcatalog(afn)A afn;
+A ep_fcatalog(A afn)
 {
   int fd;
   A z=aplus_nl;
@@ -1863,7 +1862,7 @@ A ep_fcatalog(afn)A afn;
 }
   
 ENTRYPOINT
-A ep_scatalog(astr)A astr;
+A ep_scatalog(A astr)
 {
   A z=aplus_nl,aps;
 
@@ -1879,13 +1878,13 @@ A ep_scatalog(astr)A astr;
 }
 
 ENTRYPOINT
-void ep_opts(astr)A astr;
+void ep_opts(A astr)
 {
   if(DefaultAOpts)dc(DefaultAOpts);
   DefaultAOpts=(A)ic(astr);
 }
 
-void packInstall()
+void packInstall(void)
 {
   CX saveCx=Cx;
   Cx=cx("p");

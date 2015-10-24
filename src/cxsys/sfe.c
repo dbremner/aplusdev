@@ -24,17 +24,14 @@
 
 
 
-static void handler(fd)
-int fd;
+static void handler(int fd)
 {
   char buf[256];
   sprintf(buf, "handler: <%d>: %s\n", errno, strerror(errno));
   (void)write(fd, buf, strlen(buf));
 }
 
-int sfe(name, argv)
-char *name;
-char *argv[];
+int sfe(char *name, char *argv[])
 {
   int fildes[2];
   
@@ -86,7 +83,7 @@ char *argv[];
 }
 
 
-void sfeInstall()
+void sfeInstall(void)
 {
   CX saveCx=Cx;
   Cx=cx("sys");

@@ -110,10 +110,10 @@ static struct typeinfo {
 /*
  * Define a structure type - Do correct architecture alignment
  */
-I structdef(fields, lengths, types)
-  A fields;	/* Symbols specifying field names */
-  A lengths;	/* Number of elements of type in field */
-  A types;	/* Symbols specifying field types */
+I structdef(A fields, A lengths, A types)
+  // A fields;	/* Symbols specifying field names */
+  // A lengths;	/* Number of elements of type in field */
+  // A types;	/* Symbols specifying field types */
 {
   A s;		/* Resulting structure template */
   A offsets;	/* Offsets of fields in structure */
@@ -198,8 +198,7 @@ I structdef(fields, lengths, types)
 /*
  * Return size of structure in bytes
  */
-A structsize(s)
-  A s;
+A structsize(A s)
 {
   A a = ((A*)(s->p))[3];
   return gi(a->p[a->n-1]);
@@ -211,8 +210,7 @@ A structsize(s)
  * be enough space in the array to place a properly aligned
  * structure.
  */
-I structcreate(s)
-  A s;
+I structcreate(A s)
 {
   A a = ((A*)(s->p))[3];
   A b = ((A*)(s->p))[4];
@@ -229,10 +227,7 @@ I structcreate(s)
  * Return value of fields of a in a general array.  If only 1 field
  * is specified, then the result is simple.
  */
-I structget(s, a, fields)
-  A s;
-  A a;
-  A fields;
+I structget(A s, A a, A fields)
 {
   A z;
   int i;
@@ -258,14 +253,9 @@ I structget(s, a, fields)
  * in a general array.  If only 1 field is specified,
  * then the value is simple.
  */
-I structset(s, a, fields, values)
-  A s;
-  A a;
-  A fields;
-  A values;
+I structset(A s, A a, A fields, A values)
 {
   int i;
-  int deposit_field();
 
   if (fields->n == 1) {
     if (deposit_field(s, a, *(S*)fields->p, values)) {
@@ -282,10 +272,7 @@ I structset(s, a, fields, values)
   return (I)a;
 }
 
-static A retrieve_field(s, a, f)
-  A s;
-  A a;
-  S f;
+static A retrieve_field(A s, A a, S f)
 {
   int i, j, type;
   char *cp, *dp;
@@ -373,13 +360,8 @@ static A retrieve_field(s, a, f)
   return r;
 }
 
-static int deposit_field(s, a, f, v)
-  A s;
-  A a;
-  S f;
-  A v;
+static int deposit_field(A s, A a, S f, A v)
 {
-  int field_to_index();
   int i, j, type;
   char *cp, *dp;
 
@@ -445,9 +427,7 @@ static int deposit_field(s, a, f, v)
   return 0;		/* Success */
 }
 
-static int field_to_index(s, f)
-  A s;
-  S f;
+static int field_to_index(A s, S f)
 {
   int i;
   S *fields = (S*)(*(A*)s->p)->p;
@@ -464,9 +444,7 @@ static int field_to_index(s, f)
   return -1;
 }
 
-static char *alignment_origin(s, a)
-  A s;
-  A a;
+static char *alignment_origin(A s, A a)
 {
   A z = ((A*)s->p)[4];
   long u = (long)a->p;
@@ -482,22 +460,18 @@ static char *alignment_origin(s, a)
 /*
  * Return a pointer (in an integer) to the beginning of the data in a struct
  */
-I pointer(s, a)
-A s;
-A a;
+I pointer(A s, A a)
 {
   return (I)gi((I)alignment_origin(s, a));
 }
 
-I ptr(a) A a; {return (I)a->p;}
+I ptr(A a) {return (I)a->p;}
 
 /*
  * Return a packed array which is a copy of the structure
  * pointed to by p. Structure is defined by s.
  */
-I struct_pointed_to_by(s, p)
-  A s;
-  A p;
+I struct_pointed_to_by(A s, A p)
 {
   int n, i;
   char *cp;
@@ -514,8 +488,7 @@ I struct_pointed_to_by(s, p)
 /*
  * Return (double value of) float pointed to by p
  */
-I float_pointed_to_by(p)
-  A p;
+I float_pointed_to_by(A p)
 {
   A z;
 
@@ -528,8 +501,7 @@ I float_pointed_to_by(p)
 /*
  * Return double pointed to by p
  */
-I double_pointed_to_by(p)
-  A p;
+I double_pointed_to_by(A p)
 {
   A z;
 
@@ -542,8 +514,7 @@ I double_pointed_to_by(p)
 /*
  * Return char pointed to by p
  */
-A char_pointed_to_by(p)
-  A p;
+A char_pointed_to_by(A p)
 {
   return gi((I)*(char *)(p->p[0]));
 }
@@ -551,8 +522,7 @@ A char_pointed_to_by(p)
 /*
  * Return int pointed to by p
  */
-A int_pointed_to_by(p)
-  A p;
+A int_pointed_to_by(A p)
 {
   return gi(*(I *)(p->p[0]));
 }
@@ -560,8 +530,7 @@ A int_pointed_to_by(p)
 /*
  * Return short pointed to by p
  */
-A short_pointed_to_by(p)
-  A p;
+A short_pointed_to_by(A p)
 {
   return gi((I)*(short *)(p->p[0]));
 }
@@ -569,14 +538,12 @@ A short_pointed_to_by(p)
 /*
  * Return string pointed to by p
  */
-I string_pointed_to_by(p)
-  A p;
+I string_pointed_to_by(A p)
 {
   return (I)gsv(0, (char *)(p->p[0]));
 }
 
-I structtype(s)
-  A s;
+I structtype(A s)
 {
   extern S si();
   A z = ((A*)s->p)[4];
@@ -605,9 +572,7 @@ I structtype(s)
  * Display the contents of a structure in a and
  * described by s in a reasonable fashion
  */
-void structprint(s, a)
-  A a;
-  A s;
+void structprint(A s, A a)
 {
   int i;
   A z;
@@ -648,35 +613,28 @@ void structprint(s, a)
   }
 }
 
-void place_ints_at(ai, p)
-  A	ai;
-  I	*p;
+void place_ints_at(A ai, I *p)
 {
   int i;
   for (i = 0; i < ai->n; i++)
     *p++ = ai->p[i];
 }
 
-void place_floats_at(af, p)
-  A	af;
-  F	*p;
+void place_floats_at(A af, F *p)
 {
   int i;
   for (i = 0; i < af->n; i++)
     *p++ = ((F*)af->p)[i];
 }
 
-void place_chars_at(ac, p)
-  A	ac;
-  C	*p;
+void place_chars_at(A ac, C *p)
 {
   int i;
   for (i = 0; i < ac->n; i++)
     *p++ = ((C*)ac->p)[i];
 }
 
-A AHeader(a)
-  A	a;
+A AHeader(A a)
 {
   A	r, d;
   I	i;
@@ -692,8 +650,7 @@ A AHeader(a)
   R r;
 }
 
-Z I DetermineLength(a)
-  A	a;
+Z I DetermineLength(A a)
 {
   int	i;
   I	length, stat;
@@ -744,9 +701,7 @@ Z I DetermineLength(a)
   R length;
 }
 
-Z int PumpData(start, end, a)
-  char	*start, *end;
-  A	a;
+Z int PumpData(char *start, char *end, A a)
 {
   char	*cp;
   I	i, len;
@@ -829,8 +784,7 @@ Z int PumpData(start, end, a)
   R len;
 }
 
-A stuff(a)
-  A	a;
+A stuff(A a)
 {
   A	r;
   I	length;
@@ -853,8 +807,7 @@ A stuff(a)
   R r;
 }
 
-Z A SuckData(start, end)
-  char	**start, *end;
+Z A SuckData(char **start, char *end)
 {
   char	*cp;
   char	type;
@@ -929,8 +882,7 @@ Z A SuckData(start, end)
   R r;
 }
 
-A unstuff(a)
-  A	a;
+A unstuff(A a)
 {
   I	length;
   char	*start, *end;
@@ -952,7 +904,7 @@ A unstuff(a)
   R SuckData(&start, end);
 }
 
-PointerTable *AllocPointerTable()
+PointerTable *AllocPointerTable(void)
 {
   PointerTable *p;
 
@@ -962,15 +914,13 @@ PointerTable *AllocPointerTable()
   R p;
 }
 
-void FreePointerTable(p)
-  PointerTable *p;
+void FreePointerTable(PointerTable *p)
 {
   bfree((char *)p->ptr);
   bfree((char *)p);
 }
 
-char *AToString(a)
-  A	a;
+char *AToString(A a)
 {
   char	*string;
   switch (a->t) {
@@ -996,9 +946,7 @@ char *AToString(a)
   R string;
 }
 
-void *FetchPointer(table, index)
-  PointerTable	*table;
-  I		index;
+void *FetchPointer(PointerTable *table, I index)
 {
   void *ptr;
 
@@ -1010,9 +958,7 @@ void *FetchPointer(table, index)
   R ptr;
 }
 
-int FetchIndex(table, ptr)
-  PointerTable	*table;
-  void		*ptr;
+int FetchIndex(PointerTable *table, void *ptr)
 {
   int	i;
   
@@ -1023,17 +969,13 @@ int FetchIndex(table, ptr)
   R -1;
 }
 
-void RemovePointer(table, index)
-  PointerTable	*table;
-  I		index;
+void RemovePointer(PointerTable *table, I index)
 {
   if (table != NULL && index >= 0 && index < table->length)
     table->ptr[index] = (void *)(-1);
 }
 
-I InternPointer(table, ptr)
-  PointerTable	*table;
-  void		*ptr;
+I InternPointer(PointerTable *table, void *ptr)
 {
   I	i;
 
@@ -1056,16 +998,14 @@ I InternPointer(table, ptr)
   R i;
 }
 
-void InitStructureTable(sTable)
-  StructureTable	*sTable;
+void InitStructureTable(StructureTable *sTable)
 {
   int	i;
   for (i = 0; sTable[i].string != (char *)0; i++)
     sTable[i].msymbol = MS(si(sTable[i].string));
 }
 
-void InitEnumTable(enumTable)
-  EnumTable	*enumTable;
+void InitEnumTable(EnumTable *enumTable)
 {
   int i;
 
@@ -1073,8 +1013,7 @@ void InitEnumTable(enumTable)
     enumTable[i].msymbol = MS(si(enumTable[i].string));
 }
 
-void InitMaskTable(maskTable)
-  MaskTable	*maskTable;
+void InitMaskTable(MaskTable *maskTable)
 {
   int i;
 
@@ -1082,9 +1021,7 @@ void InitMaskTable(maskTable)
     maskTable[i].msymbol = MS(si(maskTable[i].string));
 }
 
-A EnumToSymbol(enumTable, value)
-  EnumTable	*enumTable;
-  unsigned long	value;
+A EnumToSymbol(EnumTable *enumTable, unsigned long value)
 {
   int 	i;
   A	r;
@@ -1102,9 +1039,7 @@ A EnumToSymbol(enumTable, value)
   R (A)gz();
 }
 
-A MaskToSymbols(maskTable, mask)
-  MaskTable	*maskTable;
-  unsigned long	mask;
+A MaskToSymbols(MaskTable *maskTable, unsigned long mask)
 {
   int 	i, n;
   A	r;
@@ -1130,10 +1065,7 @@ A MaskToSymbols(maskTable, mask)
   R r;
 }
 
-int SymbolToEnum(enumTable, a, valuep)
-  EnumTable	*enumTable;
-  A		a;
-  unsigned long	*valuep;
+int SymbolToEnum(EnumTable *enumTable, A a, unsigned long *valuep)
 {
   int	i;
 
@@ -1191,11 +1123,7 @@ int SymbolsToMask(maskTable, a, maskp)
   R 0;
 }
 
-int AToStructure(sTable, a, valuemaskp, sp)
-  StructureTable	*sTable;
-  A			a;
-  unsigned long		*valuemaskp;
-  char			*sp;
+int AToStructure(StructureTable *sTable, A a, unsigned long *valuemaskp, char *sp)
 {
   A		k, v, p;
   int		h, i, j;
@@ -1273,7 +1201,7 @@ int AToStructure(sTable, a, valuemaskp, sp)
 }
 
 
-void cInstall()
+void cInstall(void)
 {
   CX saveCx=Cx;
   Cx=cx("c"); 

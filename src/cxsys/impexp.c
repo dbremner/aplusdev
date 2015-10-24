@@ -1101,7 +1101,7 @@ ep_ImportAObject(cv, tr)
 
 ENTRYPOINT
 A
-ep_imp(acv) A acv;
+ep_imp(A acv)
 {
   A z;
   if ( acv->t != Ct ) ERROUT(ERR_TYPE);
@@ -1112,7 +1112,7 @@ ep_imp(acv) A acv;
 }
 
 
-void impexpInstall()
+void impexpInstall(void)
 {
   CX saveCx=Cx;
   Cx=cx("sys");

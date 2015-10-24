@@ -46,7 +46,7 @@ static int Itemcount;
 
 static
 int
-bs_Ccmp( s1, s2) UC *s1, *s2; 
+bs_Ccmp(UC *s1, UC* s2) 
 {
   REG int count=Itemcount, diff=0;
   while (count-- && !diff) diff = *s1++ - *s2++;
@@ -55,7 +55,7 @@ bs_Ccmp( s1, s2) UC *s1, *s2;
 
 static
 int 
-bs_Icmp( s1, s2) I *s1, *s2; 
+bs_Icmp(I *s1, I *s2) 
 {
   REG int count=Itemcount, diff=0;
   while (count-- && !diff) diff = *s1++ - *s2++;
@@ -71,7 +71,7 @@ bs_Icmp( s1, s2) I *s1, *s2;
 #endif
 static
 int
-bs_FcmpCT( s1, s2) F *s1, *s2;
+bs_FcmpCT(F *s1, F *s2)
 {
   REG int count=Itemcount;
   REG int result=0;
@@ -346,10 +346,7 @@ static int Itemsize;
 
 SUBROUTINE
 int
-bin_validate( source, target, presult, pntarget, pnsource)
-     A source, target, *presult;
-     I *pnsource;
-     int *pntarget;
+bin_validate(A source, A target, A *presult, int *pntarget, I *pnsource)
 {
   REG int res, i, ti;
 
@@ -607,8 +604,7 @@ ep_bi( source, target)
 
 ENTRYPOINT
 A
-ep_bge( source, target)
-     A source, target;
+ep_bge(A source, A target)
 {
   indexvector=FALSE;
   inequality=TRUE;
@@ -620,8 +616,7 @@ ep_bge( source, target)
 
 ENTRYPOINT
 A
-ep_be( source, target)
-     A source, target;
+ep_be(A source, A target)
 {
   indexvector=FALSE;
   inequality=FALSE;
@@ -632,8 +627,7 @@ ep_be( source, target)
 
 ENTRYPOINT
 A
-ep_ble( source, target)
-     A source, target;
+ep_ble(A source, A target)
 {
   indexvector=FALSE;
   inequality=TRUE;
@@ -645,8 +639,7 @@ ep_ble( source, target)
 
 ENTRYPOINT
 A
-ep_br( source, target)
-     A source, target;
+ep_br(A source, A target)
 {
   indexvector=FALSE;
   inequality=FALSE;
@@ -657,8 +650,7 @@ ep_br( source, target)
 
 ENTRYPOINT
 A
-ep_bp( source, ind, target)
-     A source, ind, target;
+ep_bp(A source, A ind, A target)
 {
   if (1 != ind->r) ERROUT(ERR_RANK);
   IdxCount = ind->n;
@@ -672,8 +664,7 @@ ep_bp( source, ind, target)
 
 ENTRYPOINT
 A
-ep_bpe( source, ind, target)
-     A source, ind, target;
+ep_bpe(A source, A ind, A target)
 {
   if (1 != ind->r) ERROUT(ERR_RANK);
   IdxCount = ind->n;
@@ -687,8 +678,7 @@ ep_bpe( source, ind, target)
 
 ENTRYPOINT
 A
-ep_bpr( source, ind, target)
-     A source, ind, target;
+ep_bpr(A source, A ind, A target)
 {
   if (1 != ind->r) ERROUT(ERR_RANK);
   IdxCount = ind->n;
@@ -703,8 +693,7 @@ ep_bpr( source, ind, target)
 
 ENTRYPOINT
 A
-ep_bpge( source, ind, target)
-     A source, ind, target;
+ep_bpge(A source, A ind, A target)
 {
   if (1 != ind->r) ERROUT(ERR_RANK);
   IdxCount = ind->n;
@@ -719,8 +708,7 @@ ep_bpge( source, ind, target)
 
 ENTRYPOINT
 A
-ep_bple( source, ind, target)
-     A source, ind, target;
+ep_bple(A source, A ind, A target)
 {
   if (1 != ind->r) ERROUT(ERR_RANK);
   IdxCount = ind->n;
@@ -733,7 +721,7 @@ ep_bple( source, ind, target)
 }
 
 
-void binaryInstall()
+void binaryInstall(void)
 {
   CX saveCx=Cx;
   Cx=cx("b");

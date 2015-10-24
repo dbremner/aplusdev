@@ -9,9 +9,7 @@
 #define KSUCCESS  0
 
 
-int kerberosCheck(username,password)
-char *username; 
-char *password;
+int kerberosCheck(char *username, char *password)
 {
   return KFAILURE;
 }

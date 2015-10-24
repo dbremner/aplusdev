@@ -22,7 +22,7 @@
 
 SUBROUTINE
 I
-flat_onepass( a, ptype) A a; I *ptype;
+flat_onepass(A a, I *ptype)
 {
   I i, res;
   if (!QA(a)) ERROUT(ERR_DOMAIN);
@@ -50,7 +50,7 @@ flat_onepass( a, ptype) A a; I *ptype;
 }
 
 SUBROUTINE
-C *flat_twopass(a, type, ptr) A a; I type; C *ptr;
+C *flat_twopass(A a, I type, C *ptr)
 {
   I i, n;
 
@@ -78,7 +78,7 @@ C *flat_twopass(a, type, ptr) A a; I type; C *ptr;
 
 ENTRYPOINT
 A
-ep_flat( a) register A a;
+ep_flat(A a)
 {
   A z;
   I n, type=-1;
@@ -91,14 +91,14 @@ ep_flat( a) register A a;
   R z;
 }
 
-Z quasisf(a)A a;{A s,d;if(!(QA(a)&&Et==a->t&&2==a->n))R 0;
+Z quasisf(A a){A s,d;if(!(QA(a)&&Et==a->t&&2==a->n))R 0;
 s=(A)*a->p;d=(A)a->p[1];
 R (!QF(s))&&(!QF(d))&&(qz(s)&&qz(d)||sym(s)&&s->n==d->n&&s->r<2&&d->r<2);}
 
 /* purebox() is and/QA(a), while fsy is and/QF(a) */
-Z purebox(a)A a;{if(!QA(a)||Et!=a->t)R 0;DO(a->n,if(!QA(a->p[i]))R 0)R 1;}
+Z purebox(A a){if(!QA(a)||Et!=a->t)R 0;DO(a->n,if(!QA(a->p[i]))R 0)R 1;}
 
-Z nodups(a)A a;{
+Z nodups(A a){
   A iota;
   I i,j,nodup=1,ni=a->n;
   if(50>=a->n) {
@@ -200,7 +200,7 @@ ep_alsf(a) register A a;
 }
 
   
-void dotInstall()
+void dotInstall(void)
 {
   install((PFI)ep_flat,"_flat", A_, 1, A_,0,0,0,0,0,0,0);
   install((PFI)ep_issf,"_issf", IV, 1, A_,0,0,0,0,0,0,0);

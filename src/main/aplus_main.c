@@ -78,7 +78,7 @@ static I _atmp_mode = WS_ATMP_SHARED;
 
 #ifdef _INTERPRETER_ONLY
 #include <sys/select.h>
-static void getm()
+static void getm(void)
 {
   fd_set read_fd;
   FD_ZERO(&read_fd);
@@ -324,14 +324,14 @@ static void printId(void)
 
 #ifdef BSTUB
 extern void setAplusMemStatsMode(int mode_); /* a/bstub.c */
-static void atmpinit() 
+static void atmpinit(void) 
 {
   if ( _atmp_mode==WS_MEM_STATS )
     setAplusMemStatsMode(1);
 }
 #else
 
-static void atmpinit()
+static void atmpinit(void)
 {
   if ( (_atmp_mode==WS_MALLOC) || (atmpMissing() && _atmp_mode!=WS_ATMP_HEAP) )
     {
@@ -395,9 +395,7 @@ static void xi(C* argv0)
 	return;
 }
 
-static I parseargs(argc, argv)
-register I argc;
-register C *argv[];
+static I parseargs(I argc, C *argv[])
 {
   I isinvalid = 0;
   C *optlist = "bcd:w:sh:qm:";

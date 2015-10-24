@@ -16,8 +16,7 @@
 
 #define DFLTPATH ".:/usr/ucb:/bin:/usr/bin"
 
-static int executable(filename)
-char *filename;
+static int executable(char *filename)
 {
 	struct stat statb;
 	if (stat(filename, &statb) != 0) return 0;
@@ -26,8 +25,7 @@ char *filename;
 	return 1;
 }
 
-char *searchPATH(base)
-char *base;
+char *searchPATH(char *base)
 {
 	int baselen, pathlen, dirlen;
 	char *path, *endpath, *dir, *enddir, *filename;

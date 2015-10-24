@@ -265,7 +265,7 @@ static EnumTable ErrnoTable[] = {
 
 #endif
 
-I sysErrno() { R errno; }
+I sysErrno(void) { R errno; }
 
 #if defined (__osf__)
 	A sysErrsym(n)
@@ -280,8 +280,7 @@ I sysErrno() { R errno; }
 A sysErrsym(n){A z=EnumToSymbol(ErrnoTable,n);R qz(z)?(A)gsym("unknown"):z;}
 #endif
 
-A aselect(rfd, wfd, xfd, tmo)
-  A rfd, wfd, xfd, tmo;
+A aselect(A rfd, A wfd, A xfd, A tmo)
 {
   A z, retcode, errcode, arfd, awfd, axfd;
   int width;
@@ -431,8 +430,7 @@ I amsync(A a, A aflags)
 #endif /* _AIX */
 }
 
-A gettod(atz)
-  A	atz;
+A gettod(A atz)
 {
   struct timeval tv;
   struct timezone tz;
@@ -494,8 +492,7 @@ A tsgmt()
   return z;
 }
 
-I mkts1(a)
-  A a;
+I mkts1(A a)
 {
   struct tm lt;
   A z;
@@ -514,8 +511,7 @@ I mkts1(a)
   return (I) z;
 }
 
-I mkts1gmt(a)
-  A a;
+I mkts1gmt(A a)
 {
   struct tm lt;
   A z;
@@ -541,8 +537,7 @@ I mkts1gmt(a)
   return (I) z;
 }
 
-A ts1(clock)
-  long	clock;
+A ts1(long clock)
 {
   struct tm *lt;
   A z=gv(It,7);                 /* 7-element integer vector */
@@ -563,8 +558,7 @@ A ts1(clock)
   return z;
 }
 
-A ts1gmt(clock)
-  long	clock;
+A ts1gmt(long clock)
 {
   struct tm *lt;
   A z=gv(It,7);                 /* 7-element integer vector */
@@ -590,8 +584,7 @@ time_t secs_in_epoch ()
   return time(NULL);
 }
 
-A updtime (name) 
-char *name;
+A updtime (char *name)
 {
   A z = gv(It,1);
   struct stat stbuf;
@@ -604,8 +597,7 @@ char *name;
   return z;
 }
 
-A filesize (name) 
-char *name;
+A filesize (char *name)
 {
   A z = gv(It,1);
   struct stat stbuf;
@@ -625,18 +617,17 @@ fflush_stdout()
 
 I ep_setenv(e)C*e;{R putenv(strdup(e));}
 
-A readenv(e)
-C*e;
+A readenv(C*e)
 {
   extern C*getenv();
   if((e=getenv(e))==NULL)R(A)gz();R(A)gsv(0,e);
 }
 
-A pathfind(pathVariable, defaultPath, fileName, mode)
-  char	*pathVariable;	/* environment variable containing path */
-  char	*defaultPath;	/* default path if no environment variable */
-  char	*fileName;	/* name of file to search for in path */
-  int	mode;		/* flag to test access mode a la access(2V) */
+A pathfind(char *pathVariable, char *defaultPath, char *fileName, int mode)
+  // char	*pathVariable;	/* environment variable containing path */
+  // char	*defaultPath;	/* default path if no environment variable */
+  // char	*fileName;	/* name of file to search for in path */
+  // int	mode;		/* flag to test access mode a la access(2V) */
 {
   extern char *pfind();
   A	r;
@@ -656,8 +647,7 @@ A pathfind(pathVariable, defaultPath, fileName, mode)
 #define MAX(a,b) ((a)>(b))?(a):(b)
 #endif /* MAX */
 
-A readmat(name)
-  char *name;
+A readmat(char *name)
 {
   A result;		/* 'a' character matrix */
   int num_lines;	/* number of rows of 'result' */
@@ -742,8 +732,7 @@ typedef struct fs{I l;char n[MAXNAMLEN+1];} FS;
 
 DIR  *opendir();
 
-A agetdents(a)
-  C *a;
+A agetdents(C *a)
 {
   A r; C *cp; DIR *f; FS *fs; DENT *e; NODE *hp=(NODE *)0,*np; 
   I i,j,d[MAXR+1];
@@ -811,22 +800,19 @@ Z A auxstat(a, statfunc)
   R z;
 }
 
-A astat(a)
-  A a;
+A astat(A a)
 {
   extern int stat();
   R auxstat(a, stat);
 }
 
-A alstat(a)
-  A a;
+A alstat(A a)
 {
   extern int lstat();
   R auxstat(a, lstat);
 }
 
-A areadlink(a)
-  C *a;
+A areadlink(C *a)
 {
   A r; C *b; I i,d[MAXR+1]; SSTAT st;
 
@@ -889,9 +875,7 @@ static MaskTable SyslogOptMasks[] = {
 { 0,		(char *)0,	0,	0 }
 };
 
-I syssyslog(apriority, message)
-  A	apriority;
-  C	*message;
+I syssyslog(A apriority, C *message)
 {
   unsigned long	priority;
 
@@ -905,8 +889,7 @@ I syssyslog(apriority, message)
 }
 
 
-I sysopenlog(ident, alogopt, afacility)
-  A	ident, alogopt, afacility;
+I sysopenlog(A ident, A alogopt, A afacility)
 {
   unsigned long	logopt, facility;
 
@@ -949,10 +932,7 @@ static EnumTable FcntlEnums[] = {
 { 0,		(char *)0,	0	}
 };
 
-I sysfcntl(fd, acmd, arg)
-  I	fd;
-  A	acmd;
-  I	arg;
+I sysfcntl(I fd, A acmd, I arg)
 {
   unsigned long	cmd;
   if (SymbolToEnum(FcntlEnums, acmd, &cmd)) {
@@ -1047,10 +1027,7 @@ int initIoctlTable(void)
 }
 #endif
 
-I sysioctl(fd, arequest, arg)
-  I	fd;
-  A	arequest;
-  I	arg;
+I sysioctl(I fd, A arequest, I arg)
 {
   unsigned long	request;
 #ifdef LEXABUG
@@ -1074,8 +1051,7 @@ I sysioctl(fd, arequest, arg)
 #    define	LOCK_NB		4	/* don't block when locking */
 #    define	LOCK_UN		8	/* unlock */
 #  endif
-int flock(fd, operation)
-int fd, operation;
+int flock(int fd, int operation)
 {
         struct flock fl;
         int cmd = F_SETLKW;
@@ -1103,9 +1079,7 @@ static MaskTable FlockMasks[] = {
 { 0,		(char *)0,	0,	0	}
 };
 
-I sysflock(fd, aoperation)
-  I	fd;
-  A	aoperation;
+I sysflock(I fd, A aoperation)
 {
   unsigned long	operation;
 
@@ -1129,8 +1103,7 @@ static MaskTable AccessMasks[] = {
 { 0,	(char *)0,	0,	0}
 };
 
-I sysaccess(apath, amode)
-  A	apath, amode;
+I sysaccess(A apath, A amode)
 {
   char		*path;
   unsigned long	mode;
@@ -1157,10 +1130,7 @@ static MaskTable OpenMasks[] = {
 { 0,		(char *)0,	0,	0	}
 };
 
-I sysopen(afilename, aflags, mode)
-  A	afilename;
-  A	aflags;
-  I	mode;
+I sysopen(A afilename, A aflags, I mode)
 {
   char		*filename;
   unsigned long	flags;
@@ -1190,8 +1160,7 @@ A sysgethostname()
 }
 
 
-static A username(uid)
-I uid;
+static A username(I uid)
 {
   struct passwd *pwd;
 #if defined(APLUS_THREAD_SAFE_FUNCTIONS)
@@ -1211,8 +1180,7 @@ I uid;
 }
 
 
-static A pwinfo(aobj)
-  A aobj;
+static A pwinfo(A aobj)
 {
   I uid;
   I isint=0;
@@ -1280,7 +1248,7 @@ static A getusername()
   }
 }
 
-static I syschdir(str)C *str;
+static I syschdir(C *str)
 {
   I rc=chdir(str);
   if(!rc)setPWD();
@@ -1288,7 +1256,7 @@ static I syschdir(str)C *str;
 }
 
 ENTRYPOINT
-I ep_syssleep(aobj)A aobj;
+I ep_syssleep(A aobj)
 {
   F fsecs;
   I isecs;
@@ -1379,9 +1347,7 @@ static EnumTable SignalEnums[] = {
 { 0,            (char *)0,      0       }
 };
  
-static I sysKill(pid_, signal_)
-int pid_;
-A signal_;
+static I sysKill(int pid_, A signal_)
 {
   int aSignal;
   if (SymbolToEnum(SignalEnums, signal_, &aSignal)) {
@@ -1392,7 +1358,7 @@ A signal_;
     R (I)kill((pid_t)pid_, aSignal);
 }
 
-void eponymousInstall()
+void eponymousInstall(void)
 {
   CX saveCx=Cx;
   Cx=cx("sys");

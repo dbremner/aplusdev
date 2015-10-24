@@ -32,7 +32,7 @@ extern I xfs_valence[];
 extern I xfs_argtypes[];
 extern A gsym();
 
-Z V av(a)A a;
+Z V av(A a)
 {
   I n=a->n-1;
   if (!sym(a)||n>1) R (V)0;
@@ -43,7 +43,7 @@ Z V av(a)A a;
 extern C*pp();
 
 ENTRYPOINT
-A ep_name(aobj) A aobj;
+A ep_name(A aobj)
 {
   A a, z;
   if (!QA(aobj)||Et!=aobj->t||1!=aobj->n) ERROUT(ERR_DOMAIN);a=(A)*aobj->p;
@@ -58,7 +58,7 @@ A ep_name(aobj) A aobj;
 }
 
 ENTRYPOINT
-I ep_valence(aobj) A aobj;
+I ep_valence(A aobj)
 {
   A a=0; V v;
   if (QA(aobj)&&Xt+1==aobj->t) a=aobj;
@@ -78,7 +78,7 @@ I ep_valence(aobj) A aobj;
 }
 
 ENTRYPOINT
-A ep_locals(aobj) A aobj;
+A ep_locals(A aobj)
 {
   A a=0,z,za; V v;I *zp, ux, xpa;
   if (QX(aobj)||QA(aobj)&&Xt+1==aobj->t) a=aobj;
@@ -110,7 +110,7 @@ A ep_locals(aobj) A aobj;
 }
 
 
-void infoInstall()
+void infoInstall(void)
 {
   install((PFI)ep_name, "_name", A_, 1, A_,0,0,0,0,0,0,0);
   install((PFI)ep_valence, "_valence", IV, 1, A_,0,0,0,0,0,0,0);
